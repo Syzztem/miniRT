@@ -6,11 +6,11 @@
 #    By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/08 11:37:59 by lothieve          #+#    #+#              #
-#    Updated: 2019/12/04 11:24:24 by lothieve         ###   ########.fr        #
+#    Updated: 2019/12/04 16:35:15 by lothieve         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = atoi.c ft_strncmp.c get_next_line.c get_next_line_utils.c mini_rt.c parser.c parser2.c trace.c ft_glib/color_functions.c ft_glib/v3f_operations.c ft_glib/v3f_values.c ft_glib/basic_calc.c ft_glib/ray_functions.c
+SRCS = atoi.c ft_strncmp.c get_next_line.c get_next_line_utils.c mini_rt.c parser.c parser2.c sphere.c ft_glib/color_functions.c ft_glib/v3f_operations.c ft_glib/v3f_values.c ft_glib/basic_calc.c ft_glib/ray_functions.c
 
 OBJS = ${SRCS:.c=.o}
 

@@ -54,16 +54,18 @@ int color_from_ray(t_ray r)
 	t_v3float normal;
 	t_v3float lerp;
 	float t;
+	t_color sph_color = new_color(255, 0, 0);
+	t_sphere sphere = new_sphere(new_v3f(0, 0, -100), 50);
 
-	t = check_sphere_collisions(r, new_sphere(new_v3f(0, 0, -1), 0.5f));
+	t = check_sphere_collisions(r, sphere);
 	if (!isnan(t))
 	{
-		normal = v3f_normalize(v3f_substract_v(ray_point_at(r, t), new_v3f(0, 0, -1)));
+		normal = v3f_normalize(v3f_substract_v(ray_point_at(r, t), sphere.center));
 		lerp = v3f_multiply_x(v3f_add(normal, new_v3f(1, 1, 1)), 0.5f);
 		return get_color_i(
-			(unsigned char)255 * lerp.x,
-			(unsigned char)255 * lerp.y,
-			(unsigned char)255 * lerp.z);
+			(unsigned char)sph_color.r * lerp.x,
+			(unsigned char)sph_color.g * lerp.y,
+			(unsigned char)sph_color.b * lerp.z);
 	}
 	t = 1 - (r.direction.y + 1) * 0.5f;
 	lerp = v3f_add(v3f_multiply_x(new_v3f(1, 1, 1), 1.0f - t),
