@@ -49,34 +49,52 @@ void
 	print_scene(*scene);
 }
 
+int color_from_ray(t_ray r)
+{
+	t_v3float normal;
+	t_v3float lerp;
+	float t;
+
+	t = check_sphere_collisions(r, new_sphere(new_v3f(0, 0, -1), 0.5f));
+	if (!isnan(t))
+	{
+		normal = v3f_normalize(v3f_substract_v(ray_point_at(r, t), new_v3f(0, 0, -1)));
+		lerp = v3f_multiply_x(v3f_add(normal, new_v3f(1, 1, 1)), 0.5f);
+		return get_color_i(
+			(unsigned char)255 * lerp.x,
+			(unsigned char)255 * lerp.y,
+			(unsigned char)255 * lerp.z);
+	}
+	t = 1 - (r.direction.y + 1) * 0.5f;
+	lerp = v3f_add(v3f_multiply_x(new_v3f(1, 1, 1), 1.0f - t),
+	v3f_multiply_x(new_v3f(0.5f, 0.7f, 1.0f), t));
+	return get_color_i((unsigned char)255.99 * lerp.x, (unsigned char)255.99 * lerp.y, (unsigned char)255.99 * lerp.z);
+}
+
 int window_test()
 {
 	void *mlx_ptr;
 	void *window;
-	t_sphere sphere;
-	t_line line;
+	int nx = 800;
+	int ny = 400;
 
 	mlx_ptr = mlx_init();
-	window = mlx_new_window(mlx_ptr, 500, 500, "Magic");
-	sphere.center = new_v3f(100, 100, 100);
-	sphere.radius = 20;
-	line.origin = new_v3f(-20, -20, -20);
-	t_v3float cam_dir = v3f_normalize(new_v3f(1, 1, 1));
-	t_v3float center_screen = v3f_multiply_x(cam_dir, 70 /*FOV*/);
-	t_v3float c_s = v3f_substract_v(center_screen, line.origin);
-	for (int i = 0; i < 500; i++)
-		for (int j = 0; j < 500; j++)
+	window = mlx_new_window(mlx_ptr, nx, ny, "Magic");
+	t_v3float low_left = new_v3f(-2, -1, -1);
+	t_v3float horizontal = new_v3f(4, 0, 0);
+	t_v3float vertical = new_v3f(0, 2, 0);
+	t_v3float origin = new_v3f(0, 0, 0);
+	for (int j = ny - 1; j >= 0; j--)
+		for (int i = 0; i < nx; i++)
 		{
-			t_v3float point_on_screen = v3f_add(new_v3f(i - 250, j - 250, 0), c_s);
-			line.direction = v3f_normalize(v3f_substract_v(line.origin, point_on_screen));
-			if (!isnan(check_sphere_collisions(line, sphere)))
-				mlx_pixel_put(mlx_ptr, window, i, j, 0x0);
-			else
-				mlx_pixel_put(mlx_ptr, window, i, j, 0x00ffffff);
+			float u = (float)i / (float)nx;
+			float v = (float)j / (float)ny;
+			t_ray r = new_ray(origin, v3f_add(v3f_add(low_left, v3f_multiply_x(horizontal, u)),
+			v3f_multiply_x(vertical, v)));
+			int color = color_from_ray(r);
+			mlx_pixel_put(mlx_ptr, window, i, j, color);
 		}
 	mlx_loop(mlx_ptr);
-	t_v3float p = v3f_add(line.origin, v3f_multiply_x(line.direction, check_sphere_collisions(line, sphere)));
-	printf("%f, %f, %f\n", p.x, p.y, p.z);
 	return 0;
 }
 

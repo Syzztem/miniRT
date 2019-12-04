@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:33:49 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/01 16:30:13 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:20:50 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_v3float
 	return (u);
 }
 
-float v3f_dist_lp(t_line line, t_v3float point)
+float v3f_dist_lp(t_ray line, t_v3float point)
 {
 	t_v3float dir;
 

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/02 15:17:57 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/04 13:03:19 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ typedef struct	s_scene
 	t_cam		camera;
 }				t_scene;
 
-typedef struct	s_sphere
-{
-	t_v3float	center;
-	int			radius;
-	int			color;
-}				t_sphere;
-
 typedef struct	s_shape
 {
 	t_vector3	position;
@@ -61,6 +54,6 @@ t_vector3		get_v3(char **str);
 t_vector2		get_res(char *line);
 t_alight		get_light(char *line);
 t_cam			mom_get_camera(char *line);
-float			check_sphere_collisions(t_line line, t_sphere sphere);
+float			check_sphere_collisions(t_ray line, t_sphere sphere);
 
 #endif

@@ -1,52 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color_functions.c                                  :+:      :+:    :+:   */
+/*   ray_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/24 18:08:50 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/04 13:09:13 by lothieve         ###   ########.fr       */
+/*   Created: 2019/12/03 16:44:13 by lothieve          #+#    #+#             */
+/*   Updated: 2019/12/04 14:08:45 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glib.h"
 
-t_color
-	new_color(unsigned char r, unsigned char g, unsigned char b)
+t_ray new_ray(t_v3float origin, t_v3float direction)
 {
-	t_color color;
+	t_ray ray;
 
-	color.r = r;
-	color.g = g;
-	color.b = b;
-	return (color);
+	ray.origin = origin;
+	ray.direction = v3f_normalize(direction);
+	return (ray);
 }
 
-int
-	get_color_i(int r, int g, int b)
+t_sphere new_sphere(t_v3float center, float radius)
 {
-	int out;
+	t_sphere sphere;
 
-	out = 0;
-	out += r;
-	out = out << 8;
-	out += g;
-	out = out << 8;
-	out += b;
-	return (out);
+	sphere.center = center;
+	sphere.radius = radius;
+	return (sphere);
 }
 
-int
-	get_color(t_color color)
+t_v3float ray_point_at(t_ray ray, float t)
 {
-	int out;
-
-	out = 0;
-	out += color.r;
-	out = out << 8;
-	out += color.g;
-	out = out << 8;
-	out += color.b;
-	return (out);
+	return (v3f_add(ray.origin, v3f_multiply_x(ray.direction, t)));
 }
