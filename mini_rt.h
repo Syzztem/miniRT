@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/04 13:03:19 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/10 14::47 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+
+struct s_shape;
+
+enum e_shapes
+{
+	SPHERE
+};
+
+typedef union	u_shapes
+{
+	t_sphere sphere;
+}				t_shapes;
 
 typedef struct	s_cam
 {
@@ -38,10 +50,35 @@ typedef struct	s_scene
 	t_cam		camera;
 }				t_scene;
 
+typedef struct	s_light
+{
+	t_v3float	position;
+	float		intensity;
+	int			color;
+}				t_light;
+
+typedef union	u_func_types
+{
+	float	(*distance) (struct s_shape shape, t_v3float point);
+	float	(*collision) (struct s_shape shape, t_ray ray);
+}				t_func_types;
+
 typedef struct	s_shape
 {
-	t_vector3	position;
+	int				type;
+	t_color			color;
+	t_shapes		shape_data;
+	struct s_shape	*next;
+	t_func_types	calculate_fun;
+	t_v3float		(*calculate_normal) (float t, struct s_shape shape, t_ray ray);
 }				t_shape;
+
+typedef struct	s_sdist
+{
+	t_shape	shape;
+	float	distance;
+}				t_sdist;
+
 
 int				ft_atoi(const char *str);
 int				ft_isspace(int c);
@@ -54,6 +91,8 @@ t_vector3		get_v3(char **str);
 t_vector2		get_res(char *line);
 t_alight		get_light(char *line);
 t_cam			mom_get_camera(char *line);
-float			check_sphere_collisions(t_ray line, t_sphere sphere);
+t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
+float			point_to_sphere(t_v3float point, t_sphere sphere);
+float			check_sphere_collisions(t_shape shape, t_ray line);
 
 #endif

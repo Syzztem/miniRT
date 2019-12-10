@@ -14,10 +14,45 @@
 #include "get_next_line.h"
 
 void
-	print_scene(t_scene s)
+	db_print_scene(t_scene s)
 {
 	printf("Scene:\nResolution : %d %d\nAmbient light : Intensity: %.3f, Color: %x\nCamera: position: %d,%d,%d rotation: %.3f,%.3f,%.3f angle: %d",
 	s.resolution.x, s.resolution.y, s.light.intensity, s.light.color, s.camera.pos.x, s.camera.pos.y, s.camera.pos.z, s.camera.rot.x, s.camera.rot.y, s.camera.rot.z, s.camera.fov);
+}
+
+t_shape
+	*db_create_shape_list()
+{
+	t_shape *start;
+	t_shape *elem;
+	start = malloc(sizeof(t_shape));
+	elem = start;
+	//init
+	elem->shape_data.sphere = new_sphere(new_v3f(0, 0, -1000), 50);
+	elem->type = SPHERE;
+	elem->color = new_color(85, 42, 212);
+	elem->calculate_fun.collision = check_sphere_collisions;
+	elem->calculate_normal = calculate_sphere_normal;
+	elem->next = NULL;
+	//new elem
+	elem->next = malloc(sizeof(t_shape));
+	elem = elem->next;
+	elem->shape_data.sphere = new_sphere(new_v3f(30, 0, -980), 30);
+	elem->type = SPHERE;
+	elem->color = new_color(161, 60, 232);
+	elem->calculate_fun.collision = check_sphere_collisions;
+	elem->calculate_normal = calculate_sphere_normal;
+	elem->next = NULL;
+	//new elem
+	elem->next = malloc(sizeof(t_shape));
+	elem = elem->next;
+	elem->shape_data.sphere = new_sphere(new_v3f(25, 30, -500), 10);
+	elem->type = SPHERE;
+	elem->color = new_color(0, 0, 255);
+	elem->calculate_fun.collision = check_sphere_collisions;
+	elem->calculate_normal = calculate_sphere_normal;
+	elem->next = NULL;
+	return start;
 }
 
 t_scene
@@ -46,28 +81,44 @@ void
 			;
 		free(line);
 	}
-	print_scene(*scene);
+	db_print_scene(*scene);
 }
 
-int color_from_ray(t_ray r)
+t_sdist tmin(t_shape *shape_list, t_ray ray)
 {
-	t_v3float normal;
-	t_v3float lerp;
+	t_sdist sdist;
 	float t;
-	t_color sph_color = new_color(255, 0, 0);
-	t_sphere sphere = new_sphere(new_v3f(0, 0, -100), 50);
 
-	t = check_sphere_collisions(r, sphere);
-	if (!isnan(t))
+	sdist.distance = 0;
+	while (shape_list)
 	{
-		normal = v3f_normalize(v3f_substract_v(ray_point_at(r, t), sphere.center));
+		t = shape_list->calculate_fun.collision(*shape_list, ray);
+		if ((sdist.distance == 0 || sdist.distance > t) && !isnan(t))
+			sdist = (t_sdist) {.shape = *shape_list, .distance = t};
+		shape_list = shape_list->next;
+	}
+	return (sdist);
+}
+
+int calculate_color(t_ray ray)
+{
+	t_v3float	normal;
+	t_v3float	lerp;
+	t_sdist		closest_shape;
+	float		t;
+	t_shape *shape_list = db_create_shape_list();
+
+	closest_shape = tmin(shape_list, ray);
+	if (closest_shape.distance != 0)
+	{
+		normal = shape_list->calculate_normal(closest_shape.distance, closest_shape.shape,ray);
 		lerp = v3f_multiply_x(v3f_add(normal, new_v3f(1, 1, 1)), 0.5f);
 		return get_color_i(
-			(unsigned char)sph_color.r * lerp.x,
-			(unsigned char)sph_color.g * lerp.y,
-			(unsigned char)sph_color.b * lerp.z);
+			(unsigned char)closest_shape.shape.color.r * lerp.x,
+			(unsigned char)closest_shape.shape.color.g * lerp.x,
+			(unsigned char)closest_shape.shape.color.b * lerp.x);
 	}
-	t = 1 - (r.direction.y + 1) * 0.5f;
+	t = 1 - (ray.direction.y + 1) * 0.5f;
 	lerp = v3f_add(v3f_multiply_x(new_v3f(1, 1, 1), 1.0f - t),
 	v3f_multiply_x(new_v3f(0.5f, 0.7f, 1.0f), t));
 	return get_color_i((unsigned char)255.99 * lerp.x, (unsigned char)255.99 * lerp.y, (unsigned char)255.99 * lerp.z);
@@ -82,7 +133,7 @@ int window_test()
 
 	mlx_ptr = mlx_init();
 	window = mlx_new_window(mlx_ptr, nx, ny, "Magic");
-	t_v3float low_left = new_v3f(-2, -1, -1);
+	t_v3float low_left = new_v3f(-2, -1, -10);
 	t_v3float horizontal = new_v3f(4, 0, 0);
 	t_v3float vertical = new_v3f(0, 2, 0);
 	t_v3float origin = new_v3f(0, 0, 0);
@@ -93,7 +144,7 @@ int window_test()
 			float v = (float)j / (float)ny;
 			t_ray r = new_ray(origin, v3f_add(v3f_add(low_left, v3f_multiply_x(horizontal, u)),
 			v3f_multiply_x(vertical, v)));
-			int color = color_from_ray(r);
+			int color = calculate_color(r);
 			mlx_pixel_put(mlx_ptr, window, i, j, color);
 		}
 	mlx_loop(mlx_ptr);

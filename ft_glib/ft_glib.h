@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/04 14:25:21 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/09 14:50:56 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct	s_sphere
 {
 	t_v3float	center;
 	float		radius;
-	int			color;
 }				t_sphere;
 
 float			square(float f);
