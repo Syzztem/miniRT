@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/09 14:50:56 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/11 13:47:21 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_v3float		v3f_add(t_v3float u, t_v3float v);
 t_v3float		ray_point_at(t_ray ray, float t);
 t_sphere		new_sphere(t_v3float center, float radius);
 t_ray			new_ray(t_v3float origin, t_v3float direction);
+t_ray			ray_from_points(t_v3float a, t_v3float b);
 t_color			new_color(unsigned char r, unsigned char g, unsigned char b);
+t_color			col_multiply(t_color color, float value);
 
 #endif

@@ -20,6 +20,27 @@ void
 	s.resolution.x, s.resolution.y, s.light.intensity, s.light.color, s.camera.pos.x, s.camera.pos.y, s.camera.pos.z, s.camera.rot.x, s.camera.rot.y, s.camera.rot.z, s.camera.fov);
 }
 
+t_shape *complete_shape(t_shape *shape)
+{
+	if (shape->type == SPHERE)
+	{
+		shape->calculate_fun.collision = check_sphere_collisions;
+		shape->calculate_normal = calculate_sphere_normal;
+	}
+	return (shape);
+}
+
+t_shape *new_shape(int type, t_color color, t_shapes shape_data)
+{
+	t_shape *out;
+
+	out = malloc(sizeof(t_shape));
+	out->type = type;
+	out->color = color;
+	out->shape_data = shape_data;
+	return (complete_shape(out));
+}
+
 t_shape
 	*db_create_shape_list()
 {
@@ -28,7 +49,7 @@ t_shape
 	start = malloc(sizeof(t_shape));
 	elem = start;
 	//init
-	elem->shape_data.sphere = new_sphere(new_v3f(0, 0, -1000), 50);
+	elem->shape_data = (t_shapes) new_sphere(new_v3f(0, 0, -1000), 50);
 	elem->type = SPHERE;
 	elem->color = new_color(85, 42, 212);
 	elem->calculate_fun.collision = check_sphere_collisions;
@@ -107,16 +128,16 @@ int calculate_color(t_ray ray)
 	t_sdist		closest_shape;
 	float		t;
 	t_shape *shape_list = db_create_shape_list();
+	t_light light = new_light(new_v3f(50, 0, -950), 1, new_color(255, 255, 255));
 
 	closest_shape = tmin(shape_list, ray);
 	if (closest_shape.distance != 0)
 	{
 		normal = shape_list->calculate_normal(closest_shape.distance, closest_shape.shape,ray);
-		lerp = v3f_multiply_x(v3f_add(normal, new_v3f(1, 1, 1)), 0.5f);
-		return get_color_i(
-			(unsigned char)closest_shape.shape.color.r * lerp.x,
-			(unsigned char)closest_shape.shape.color.g * lerp.x,
-			(unsigned char)closest_shape.shape.color.b * lerp.x);
+		lerp.x = lerp_light(light, normal, ray_point_at(ray, closest_shape.distance));
+		if ((lerp.x > 1 || lerp.x < 0))
+			printf("%f\n", lerp.x);
+		return (get_color(col_multiply(closest_shape.shape.color, lerp.x)));
 	}
 	t = 1 - (ray.direction.y + 1) * 0.5f;
 	lerp = v3f_add(v3f_multiply_x(new_v3f(1, 1, 1), 1.0f - t),
