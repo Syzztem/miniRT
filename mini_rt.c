@@ -36,7 +36,7 @@ t_shape *new_shape(int type, t_color color, t_shapes shape_data)
 
 	out = malloc(sizeof(t_shape));
 	out->type = type;
-	out->color = color;
+	out->albedo = color;
 	out->shape_data = shape_data;
 	return (complete_shape(out));
 }
@@ -51,7 +51,7 @@ t_shape
 	//init
 	elem->shape_data = (t_shapes) new_sphere(new_v3f(0, 0, -1000), 50);
 	elem->type = SPHERE;
-	elem->color = new_color(85, 42, 212);
+	elem->albedo = new_color(85, 42, 212);
 	elem->calculate_fun.collision = check_sphere_collisions;
 	elem->calculate_normal = calculate_sphere_normal;
 	elem->next = NULL;
@@ -60,16 +60,16 @@ t_shape
 	elem = elem->next;
 	elem->shape_data.sphere = new_sphere(new_v3f(30, 0, -980), 30);
 	elem->type = SPHERE;
-	elem->color = new_color(161, 60, 232);
+	elem->albedo = new_color(161, 60, 232);
 	elem->calculate_fun.collision = check_sphere_collisions;
 	elem->calculate_normal = calculate_sphere_normal;
 	elem->next = NULL;
 	//new elem
 	elem->next = malloc(sizeof(t_shape));
 	elem = elem->next;
-	elem->shape_data.sphere = new_sphere(new_v3f(25, 30, -500), 10);
+	elem->shape_data.sphere = new_sphere(new_v3f(250, 0, -1000), 100);
 	elem->type = SPHERE;
-	elem->color = new_color(0, 0, 255);
+	elem->albedo = new_color(0, 0, 255);
 	elem->calculate_fun.collision = check_sphere_collisions;
 	elem->calculate_normal = calculate_sphere_normal;
 	elem->next = NULL;
@@ -128,16 +128,14 @@ int calculate_color(t_ray ray)
 	t_sdist		closest_shape;
 	float		t;
 	t_shape *shape_list = db_create_shape_list();
-	t_light light = new_light(new_v3f(50, 0, -950), 1, new_color(255, 255, 255));
+	t_light light = new_light(new_v3f(-900, 0, -800), 1, new_color(255, 255, 255));
 
 	closest_shape = tmin(shape_list, ray);
 	if (closest_shape.distance != 0)
 	{
 		normal = shape_list->calculate_normal(closest_shape.distance, closest_shape.shape,ray);
-		lerp.x = lerp_light(light, normal, ray_point_at(ray, closest_shape.distance));
-		if ((lerp.x > 1 || lerp.x < 0))
-			printf("%f\n", lerp.x);
-		return (get_color(col_multiply(closest_shape.shape.color, lerp.x)));
+		return (lerp_light(light, new_ray(ray_point_at(ray, closest_shape.distance), normal),
+		closest_shape.shape.albedo, shape_list));
 	}
 	t = 1 - (ray.direction.y + 1) * 0.5f;
 	lerp = v3f_add(v3f_multiply_x(new_v3f(1, 1, 1), 1.0f - t),

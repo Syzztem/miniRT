@@ -66,7 +66,7 @@ typedef union	u_func_types
 typedef struct	s_shape
 {
 	int				type;
-	t_color			color;
+	t_color			albedo;
 	t_shapes		shape_data;
 	struct s_shape	*next;
 	t_func_types	calculate_fun;
@@ -78,7 +78,6 @@ typedef struct	s_sdist
 	t_shape	shape;
 	float	distance;
 }				t_sdist;
-
 
 int				ft_atoi(const char *str);
 int				ft_isspace(int c);
@@ -94,7 +93,7 @@ t_cam			mom_get_camera(char *line);
 t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
 float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);
-float			lerp_light(t_light light, t_v3float normal, t_v3float hitpoint);
+int				lerp_light(t_light light, t_ray normal_ray, t_color shape_color, t_shape *shape_list);
 t_light			new_light(t_v3float position, float intensity, t_color color);
 
 #endif
