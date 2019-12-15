@@ -52,9 +52,10 @@ typedef struct	s_scene
 
 typedef struct	s_light
 {
-	t_v3float	position;
-	float		intensity;
-	t_color		color;
+	t_v3float		position;
+	float			intensity;
+	t_color			color;
+	struct s_light	*next;
 }				t_light;
 
 typedef union	u_func_types
@@ -93,7 +94,7 @@ t_cam			mom_get_camera(char *line);
 t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
 float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);
-int				lerp_light(t_light light, t_ray normal_ray, t_color shape_color, t_shape *shape_list);
+int				lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_shape *shape_list);
 t_light			new_light(t_v3float position, float intensity, t_color color);
 
 #endif

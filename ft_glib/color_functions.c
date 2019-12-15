@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:08:50 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/12 15:03:26 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/15 16:28:00 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ int
 	out = out << 8;
 	out += color.b;
 	return (out);
+}
+
+t_color
+	col_add(t_color a, t_color b)
+{
+	a.r = sat_add(a.r, b.r);
+	a.g = sat_add(a.g, b.g);
+	a.b = sat_add(a.b, b.b);
+	return (a);
 }
 
 t_color

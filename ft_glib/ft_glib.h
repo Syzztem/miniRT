@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/11 13:47:21 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/15 16:27:02 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ t_ray			new_ray(t_v3float origin, t_v3float direction);
 t_ray			ray_from_points(t_v3float a, t_v3float b);
 t_color			new_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			col_multiply(t_color color, float value);
+t_color			col_add(t_color a, t_color b);
+unsigned char	sat_add(unsigned char a, unsigned char b);
 
 #endif

@@ -73,6 +73,7 @@ t_shape
 	elem->calculate_fun.collision = check_sphere_collisions;
 	elem->calculate_normal = calculate_sphere_normal;
 	elem->next = NULL;
+	//new elem
 	return start;
 }
 
@@ -81,6 +82,21 @@ t_scene
 {
 	static t_scene scene;
 	return (&scene);
+}
+
+t_light *db_create_light_list()
+{
+	t_light *head;
+	t_light *current;
+
+	head = malloc(sizeof(t_light));
+	current = head;
+	*current = new_light(new_v3f(-900, 0, -800), 1, new_color(255, 255, 255));
+	current->next = malloc(sizeof(t_light));
+	current = current->next;
+	*current = new_light(new_v3f(70, 0, -800), 1, new_color(255, 255, 255));
+	current->next = NULL;
+	return (head);
 }
 
 void
@@ -128,13 +144,13 @@ int calculate_color(t_ray ray)
 	t_sdist		closest_shape;
 	float		t;
 	t_shape *shape_list = db_create_shape_list();
-	t_light light = new_light(new_v3f(-900, 0, -800), 1, new_color(255, 255, 255));
+	t_light *light_list = db_create_light_list();
 
 	closest_shape = tmin(shape_list, ray);
 	if (closest_shape.distance != 0)
 	{
 		normal = shape_list->calculate_normal(closest_shape.distance, closest_shape.shape,ray);
-		return (lerp_light(light, new_ray(ray_point_at(ray, closest_shape.distance), normal),
+		return (lerp_light(light_list, new_ray(ray_point_at(ray, closest_shape.distance), normal),
 		closest_shape.shape.albedo, shape_list));
 	}
 	t = 1 - (ray.direction.y + 1) * 0.5f;
@@ -147,8 +163,8 @@ int window_test()
 {
 	void *mlx_ptr;
 	void *window;
-	int nx = 800;
-	int ny = 400;
+	int nx = 1600;
+	int ny = 800;
 
 	mlx_ptr = mlx_init();
 	window = mlx_new_window(mlx_ptr, nx, ny, "Magic");
