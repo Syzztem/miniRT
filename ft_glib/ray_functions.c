@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:44:13 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/11 13:23:36 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/05 12:43:46 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ t_sphere new_sphere(t_v3float center, float radius)
 	sphere.center = center;
 	sphere.radius = radius;
 	return (sphere);
+}
+
+t_plane new_plane(t_v3float normal, t_v3float p)
+{
+	t_plane plane;
+
+	plane.normal = normal;
+	plane.p = p;
+	return (plane);
 }
 
 t_v3float ray_point_at(t_ray ray, float t)

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/18 12:24:16 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:14:25 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 # define FT_GLIB_H
 # include <mlx.h>
 # include <math.h>
+# include <stdlib.h>
+
+typedef float **t_matrix;
+
+typedef struct	s_image
+{
+	void	*img_ptr;
+	int		width;
+	int		height;
+	int		*img_data;
+	char	bpp;
+	int		size_line;
+	int		endian;
+}				t_image;
 
 typedef struct	s_vector3
 {
@@ -48,6 +62,19 @@ typedef struct	s_ray
 	t_v3float	direction;
 }				t_ray;
 
+typedef struct	s_plane
+{
+	t_v3float normal;
+	t_v3float p;
+}				t_plane;
+
+typedef struct	s_triangle
+{
+	t_v3float	points[3];
+	t_plane		plane;
+}				t_triangle;
+
+
 typedef struct	s_sphere
 {
 	t_v3float	center;
@@ -69,6 +96,8 @@ t_v3float 		v3f_normalize(t_v3float v);
 t_v3float		v3f_substract_v(t_v3float u, t_v3float v);
 t_v3float		v3f_add(t_v3float u, t_v3float v);
 t_v3float		ray_point_at(t_ray ray, float t);
+t_v3float		matxvec(t_matrix mat, t_v3float vec);
+t_v3float		matxdir(t_matrix mat, t_v3float dir);
 t_sphere		new_sphere(t_v3float center, float radius);
 t_ray			new_ray(t_v3float origin, t_v3float direction);
 t_ray			ray_from_points(t_v3float a, t_v3float b);
@@ -76,6 +105,10 @@ t_color			new_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			col_multiply(t_color color, float value);
 t_color			col_add(t_color a, t_color b);
 t_color			col_multiply_c(t_color a, t_color b);
+t_matrix		initialize_matrix();
+t_plane			new_plane(t_v3float normal, t_v3float p);
 unsigned char	sat_add(unsigned char a, unsigned char b);
+int				create_bitmap(t_image image, char *filename);
+void			*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif

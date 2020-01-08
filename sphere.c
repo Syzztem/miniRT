@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:43:24 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/11 11:19:37 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:36:37 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 float
 	check_sphere_collisions(t_shape shape, t_ray line)
 {
-	t_v3float oc;
+	t_v3float	oc;
+	float		b;
+	float		c;
 
 	oc = v3f_substract_v(line.origin, shape.shape_data.sphere.center);
-	float b = v3f_dot(oc, line.direction);
-	float c = v3f_dot(oc, oc);
-	c -= square(shape.shape_data.sphere.radius);
+	b = v3f_dot(oc, line.direction);
+	c = v3f_dot(oc, oc) -square(shape.shape_data.sphere.radius);
 	return(-b -sqrt(square(b) - c));
 }
 

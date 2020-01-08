@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:05:55 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/27 20:40:27 by lothieve         ###   ########.fr       */
+/*   Updated: 2019/12/19 16:29:54 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,3 @@ t_cam mom_get_camera(char *line)
 	out.fov = ft_atoi(line);
 	return (out);
 }
-/*
-t_sphere get_sphere(char *line)
-{
-	t_sphere sphere;
-	(void) line;
-	return (sphere);
-}
-*/

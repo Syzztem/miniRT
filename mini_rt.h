@@ -17,17 +17,22 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+# define VIEW_DISTANCE 10000000000
 
 struct s_shape;
 
 enum e_shapes
 {
-	SPHERE
+	SPHERE,
+	TRIANGLE,
+	PLANE
 };
 
 typedef union	u_shapes
 {
-	t_sphere sphere;
+	t_sphere	sphere;
+	t_triangle	triangle;
+	t_plane		plane;
 }				t_shapes;
 
 typedef struct	s_cam
@@ -96,5 +101,7 @@ float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);
 int				lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_shape *shape_list);
 t_light			new_light(t_v3float position, float intensity, t_color color);
+float			check_plane_collisons (t_shape shape, t_ray line);
+t_v3float		calculate_plane_normal(float f, t_shape shape, t_ray ray);
 
 #endif

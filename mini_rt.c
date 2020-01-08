@@ -6,8 +6,8 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/23 17:43:25 by lothieve         ###   ########.fr       */
-/*                            :w                                                */
+/*   Updated: 2020/01/08 11:28:49 by lothieve         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
@@ -73,7 +73,6 @@ t_shape
 	elem->calculate_fun.collision = check_sphere_collisions;
 	elem->calculate_normal = calculate_sphere_normal;
 	elem->next = NULL;
-	//new elem
 	return start;
 }
 
@@ -121,6 +120,11 @@ void
 	db_print_scene(*scene);
 }
 
+void db_print_vector(t_v3float v)
+{
+	printf("%f, %f, %f\n", v.x, v.y, v.z);
+}
+
 t_sdist tmin(t_shape *shape_list, t_ray ray)
 {
 	t_sdist sdist;
@@ -130,7 +134,7 @@ t_sdist tmin(t_shape *shape_list, t_ray ray)
 	while (shape_list)
 	{
 		t = shape_list->calculate_fun.collision(*shape_list, ray);
-		if ((sdist.distance == 0 || sdist.distance > t) && !isnan(t))
+		if ((sdist.distance == 0 || sdist.distance > t) && !isnan(t) && t > 0)
 			sdist = (t_sdist) {.shape = *shape_list, .distance = t};
 		shape_list = shape_list->next;
 	}
@@ -159,6 +163,22 @@ int calculate_color(t_ray ray)
 	return get_color_i((unsigned char)255.99 * lerp.x, (unsigned char)255.99 * lerp.y, (unsigned char)255.99 * lerp.z);
 }
 
+t_image	generate_image(int width, int height, void *mlx_ptr)
+{
+	t_image out;
+
+	out.img_ptr = mlx_new_image(mlx_ptr, width, height);
+	out.width = width;
+	out.height = height;
+	out.img_data = (int *) mlx_get_data_addr(out.img_ptr, (int *) &out.bpp, &out.size_line, &out.endian);
+	return (out);
+}
+
+void	image_pixel_put(t_image image, int x, int y, int color)
+{
+	image.img_data[x + y * image.size_line / sizeof(int)] = color;
+}
+
 int window_test()
 {
 	void *mlx_ptr;
@@ -167,6 +187,8 @@ int window_test()
 	int ny = 800;
 
 	mlx_ptr = mlx_init();
+	t_image image;
+	image  = generate_image(nx, ny, mlx_ptr);
 	window = mlx_new_window(mlx_ptr, nx, ny, "Magic");
 	t_v3float low_left = new_v3f(-2, -1, -10);
 	t_v3float horizontal = new_v3f(4, 0, 0);
@@ -180,8 +202,10 @@ int window_test()
 			t_ray r = new_ray(origin, v3f_add(v3f_add(low_left, v3f_multiply_x(horizontal, u)),
 			v3f_multiply_x(vertical, v)));
 			int color = calculate_color(r);
-			mlx_pixel_put(mlx_ptr, window, i, j, color);
+			image_pixel_put(image, i, j, color);
 		}
+	create_bitmap(image, "test.bmp");
+	mlx_put_image_to_window(mlx_ptr, window, image.img_ptr, 0, 0);
 	mlx_loop(mlx_ptr);
 	return 0;
 }
