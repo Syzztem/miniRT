@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/05 16:54:30 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/12 13:51:08 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int any_collision(t_ray ray, t_shape *shape_list, float max)
 	return (0);
 }
 
-int		lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_shape *shape_list)
+int		lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_scene scene)
 {
 	t_ray	light_ray;
 	float	multiplier;
@@ -36,11 +36,12 @@ int		lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_shape *shape
 	while (light)
 	{
 		light_ray = ray_from_points(light->position, normal_ray.origin);
-		if (!any_collision(light_ray, shape_list, v3f_magnitude(v3f_substract_v(light->position, normal_ray.origin))))
+		if (!any_collision(light_ray, scene.shape_list, v3f_magnitude(v3f_substract_v(light->position, normal_ray.origin))))
 		{
 			multiplier = light->intensity * fmax(v3f_dot(normal_ray.direction, light_ray.direction), 0);
 			color = col_add(col_multiply_c(albedo, col_multiply(light->color, multiplier)), color);
 		}
+		//color = col_add(col_multiply_c(albedo, col_multiply(scene.ambient_light.color, multiplier)), color);
 		light = light->next;
 	}
 	return (get_color(color));

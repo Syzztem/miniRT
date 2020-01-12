@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 11:36:59 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/05 14:42:34 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/08 12:29:50 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ float
 	return (d < VIEW_DISTANCE && d > 0 ? d : sqrtf(-1));
 }
 
+// TODO: return right vector direction depending on the side of the plan hit by the ray
 t_v3float
 	calculate_plane_normal(float f, t_shape shape, t_ray ray)
 {
 	(void) ray;
 	(void) f;
-	return (shape.shape_data.plane.normal);
+	return (v3f_multiply_x(shape.shape_data.plane.normal, 0 ? 1 : -1));
 }
 
 float

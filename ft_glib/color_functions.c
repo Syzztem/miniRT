@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:08:50 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/18 12:30:20 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/11 12:15:49 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,5 @@ t_color
 	a.r = a.r * b.r / 255;
 	a.g = a.g * b.g / 255;
 	a.b = a.b * b.b / 255;
-
 	return (a);
-}
-
-t_color
-	col_multiply(t_color color, float value)
-{
-	color.r *= value;
-	color.g *= value;
-	color.b *= value;
-	return (color);
 }

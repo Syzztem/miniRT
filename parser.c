@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:05:55 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/19 16:29:54 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/12 10:52:40 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ t_vector2 get_res(char *line)
 		line++;
 	out.y = ft_atoi(line);
 	return(out);
+}
+
+void calculate_rotation_data(t_cam *cam)
+{
+	t_v3float unit;
+
+	unit = new_v3f(0, 0, 1);
+	cam->rot_data.r_cos = v3f_dot(unit, cam->rot);
+	cam->rot_data.r_sin = sinf(acosf(cam->rot_data.r_cos));
+	cam->rot_data.axe = v3f_normalize(v3f_multiply_v(unit, cam->rot));
 }
 
 t_alight get_light(char *line)
@@ -46,15 +56,18 @@ t_alight get_light(char *line)
 	return (out);
 }
 
-t_cam mom_get_camera(char *line)
+t_cam *mom_get_camera(char *line)
 {
-	t_cam out;
+	t_cam *out;
 
 	line++;
+	out = malloc(sizeof(t_cam));
 	while (ft_isspace(*line))
 		line++;
-	out.pos = get_v3(&line);
-	out.rot = get_v3f(&line);
-	out.fov = ft_atoi(line);
+	out->pos = get_v3f(&line);
+	out->rot = get_v3f(&line);
+	out->fov = ft_atoi(line);
+	calculate_rotation_data(out);
+	out->next = NULL;
 	return (out);
 }

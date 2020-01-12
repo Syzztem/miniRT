@@ -6,17 +6,17 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 14:56:11 by lothieve          #+#    #+#             */
-/*   Updated: 2019/12/19 16:35:13 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/11 12:19:55 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glib.h"
 #include <stdlib.h>
 
-t_matrix	initialize_matrix()
+t_matrix	initialize_matrix(void)
 {
-	float **mat;
-	int i;
+	float	**mat;
+	int		i;
 
 	mat = malloc(sizeof(float*) * 4);
 	i = 0;

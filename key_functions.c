@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v3f_values.c                                       :+:      :+:    :+:   */
+/*   key_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 19:52:03 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:08:24 by lothieve         ###   ########.fr       */
+/*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
+/*   Updated: 2020/01/12 12:15:53 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_glib.h"
+#include "mini_rt.h"
 
-t_v3float
-	new_v3f(float x, float y, float z)
+int k_hook(int keycode, void *param)
 {
-	t_v3float out;
+	t_scene *scene;
 
-	out.x = x;
-	out.y = y;
-	out.z = z;
-	return (out);
-}
-
-float
-	v3f_magnitude(t_v3float v)
-{
-	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
-}
-
-t_v3float
-	v3f_normalize(t_v3float v)
-{
-	return (v3f_divide_x(v, v3f_magnitude(v)));
-}
-
-t_v3float
-	to_v3f(t_vector3 v)
-{
-	return (new_v3f(v.x, v.y, v.z));
+	scene = (t_scene*)param;
+	(void) param;
+	printf("%d\n", keycode);
+	if (keycode == 53)
+	{
+		mlx_destroy_window(scene->mlx_pointer, scene->window_pointer);
+	}
+	return (0);
 }

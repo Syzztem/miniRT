@@ -35,25 +35,28 @@ typedef union	u_shapes
 	t_plane		plane;
 }				t_shapes;
 
+typedef struct	s_rot_data
+{
+	float		r_sin;
+	float		r_cos;
+	t_v3float	axe;
+}				t_rot_data;
+
 typedef struct	s_cam
 {
-	t_vector3	pos;
-	t_v3float	rot;
-	int			fov;
+	t_v3float		pos;
+	t_v3float		rot;
+	int				fov;
+	t_rot_data		rot_data;
+	t_image			render;
+	struct s_cam	*next;
 }				t_cam;
 
 typedef struct	s_alight
 {
 	float	intensity;
-	int		color;
+	t_color color;
 }				t_alight;
-
-typedef struct	s_scene
-{
-	t_vector2	resolution;
-	t_alight	light;
-	t_cam		camera;
-}				t_scene;
 
 typedef struct	s_light
 {
@@ -85,6 +88,17 @@ typedef struct	s_sdist
 	float	distance;
 }				t_sdist;
 
+typedef struct	s_scene
+{
+	t_vector2	resolution;
+	t_alight	ambient_light;
+	t_cam		*camera;
+	t_shape		*shape_list;
+	t_light		*light_list;
+	void		*mlx_pointer;
+	void		*window_pointer;
+}				t_scene;
+
 int				ft_atoi(const char *str);
 int				ft_isspace(int c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -95,13 +109,15 @@ t_v3float		get_v3f(char **str);
 t_vector3		get_v3(char **str);
 t_vector2		get_res(char *line);
 t_alight		get_light(char *line);
-t_cam			mom_get_camera(char *line);
+t_cam			*mom_get_camera(char *line);
 t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
 float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);
-int				lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_shape *shape_list);
+int				lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_scene scene);
 t_light			new_light(t_v3float position, float intensity, t_color color);
 float			check_plane_collisons (t_shape shape, t_ray line);
 t_v3float		calculate_plane_normal(float f, t_shape shape, t_ray ray);
+void			calculate_rotation_data(t_cam *cam);
+int				k_hook(int keycode, void *param);
 
 #endif

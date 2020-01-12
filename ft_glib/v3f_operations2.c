@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v3f_values.c                                       :+:      :+:    :+:   */
+/*   v3f_operations2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 19:52:03 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:08:24 by lothieve         ###   ########.fr       */
+/*   Created: 2020/01/11 12:23:21 by lothieve          #+#    #+#             */
+/*   Updated: 2020/01/11 12:23:45 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glib.h"
 
 t_v3float
-	new_v3f(float x, float y, float z)
+	v3f_multiply_x(t_v3float u, float n)
 {
-	t_v3float out;
+	u.x *= n;
+	u.y *= n;
+	u.z *= n;
+	return (u);
+}
 
-	out.x = x;
-	out.y = y;
-	out.z = z;
-	return (out);
+t_v3float
+	v3f_divide_x(t_v3float u, float n)
+{
+	u.x /= n;
+	u.y /= n;
+	u.z /= n;
+	return (u);
 }
 
 float
-	v3f_magnitude(t_v3float v)
+	v3f_dist_lp(t_ray line, t_v3float point)
 {
-	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
-}
+	t_v3float dir;
 
-t_v3float
-	v3f_normalize(t_v3float v)
-{
-	return (v3f_divide_x(v, v3f_magnitude(v)));
-}
-
-t_v3float
-	to_v3f(t_vector3 v)
-{
-	return (new_v3f(v.x, v.y, v.z));
+	dir = new_v3f(line.origin.x - point.x,
+	line.origin.y - point.z,
+	line.origin.z - point.z);
+	return (v3f_magnitude(v3f_multiply_v(dir, line.direction))
+	/ v3f_magnitude(line.direction));
 }
