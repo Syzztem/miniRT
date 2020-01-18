@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/12 13:50:27 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/18 16:15:45 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 
 void db_print_vector(t_v3float v)
 {
-	printf("%f, %f, %f\n", v.x, v.y, v.z);
+	printf("%.2f, %.2f, %.2f\n", v.x, v.y, v.z);
+}
+
+void db_print_color(t_color c)
+{
+	printf("r%d, g%d, b%d\n", c.r, c.g, c.b);
 }
 
 t_shape *complete_shape(t_shape *shape)
@@ -39,6 +44,34 @@ t_shape *new_shape(int type, t_color color, t_shapes shape_data)
 	return (complete_shape(out));
 }
 
+/*
+t_cam
+	*db_create_cam_list()
+{
+	t_cam *head;
+	t_cam *camera;
+
+	head = add_cam("c 0,0,0 0,0,1 90");
+	camera = head;
+	//new elem
+	camera->next = malloc(sizeof(t_cam));
+	camera = camera->next;
+	camera->pos = new_v3f(0, 50, 0);
+	camera->rot = v3f_normalize(new_v3f(0, 0, 1));
+	camera->fov = 90;
+	calculate_rotation_data(camera);
+	//new elem
+	camera->next = malloc(sizeof(t_cam));
+	camera = camera->next;
+	camera->pos = new_v3f(100, 0, -100);
+	camera->rot = v3f_normalize(new_v3f(1, 0, 1));
+	camera->fov = 90;
+	calculate_rotation_data(camera);
+	//end
+	camera->next = head;
+	return head;
+}
+*/
 t_shape
 	*db_create_shape_list()
 {
@@ -71,7 +104,15 @@ t_shape
 	elem->calculate_fun.collision = check_sphere_collisions;
 	elem->calculate_normal = calculate_sphere_normal;
 	elem->next = NULL;
-
+	//new elem
+	elem->next = malloc(sizeof(t_shape));
+	elem = elem->next;
+	elem->shape_data.plane = new_plane(v3f_normalize(new_v3f(0, 1, 1)), new_v3f(0, -500, 2000));
+	elem->type = PLANE;
+	elem->albedo = new_color(255, 255, 255);
+	elem->calculate_fun.collision = check_plane_collisons;
+	elem->calculate_normal = calculate_plane_normal;
+	elem->next = NULL;
 	return start;
 }
 
@@ -82,34 +123,66 @@ t_light *db_create_light_list()
 
 	head = malloc(sizeof(t_light));
 	current = head;
-	*current = new_light(new_v3f(-900, 0, 800), 1, new_color(255, 255, 255));
+	*current = new_light(new_v3f(0, 0, 0), 0.5f, new_color(255, 255, 255));
+	/*
 	current->next = malloc(sizeof(t_light));
 	current = current->next;
-	*current = new_light(new_v3f(70, 0, 800), 1, new_color(255, 255, 255));
+	*current = new_light(new_v3f(70, 0, 800), 0.5f, new_color(255, 255, 255));
 	current->next = NULL;
+	*/
 	return (head);
 }
 
-void
+t_scene
 	get_scene_info(int fd)
 {
 	char *line;
 	t_scene scene;
 
+	scene.camera = NULL;
+	scene.shape_list = NULL;
 	while (get_next_line(fd, &line))
 	{
 		if (*line == 'R')
 			scene.resolution = get_res(line);
 		else if (*line == 'A')
-			scene.ambient_light = get_light(line);
-		else if (!ft_strncmp("c ", line, 2))
-			scene.camera = mom_get_camera(line);
-		else if (*line == 's')
+			scene.ambient_light = get_alight(line);
+		else if (*line == 'l')
+			add_light(line, &scene.light_list);
+		else if (*line == 'c' && ft_isspace(*(line +1)))
+			add_cam(line, &scene.camera);
+		else if (!ft_strncmp("sp", line, 2))
+			add_sphere(line, &scene.shape_list);
+		else if (!ft_strncmp("pl", line, 2))
+			add_plane(line, &scene.shape_list);
+		else if (!ft_strncmp("cy", line, 2))
+			;
+		else if (!ft_strncmp("tr", line, 2))
+			;
+		else if (!ft_strncmp("sq", line, 2))
 			;
 		free(line);
 	}
-	scene.shape_list = db_create_shape_list();
-	scene.light_list = db_create_light_list();
+	//scene.shape_list = db_create_shape_list();
+	//scene.light_list = db_create_light_list();
+	/*
+	printf("%d, %d\n", scene.resolution.x, scene.resolution.y);
+	printf("ambient light : %d, %d, %d int: %.2f\n", scene.ambient_light.color.r, scene.ambient_light.color.g, scene.ambient_light.color.b, scene.ambient_light.intensity);
+	for (int i = 0; scene.camera != NULL; i++)
+	{
+		printf ("camera %d, fov = %d\n", 0, scene.camera->fov);
+		db_print_vector(scene.camera->pos);
+		db_print_vector(scene.camera->rot);
+		scene.camera = scene.camera->next;
+	}
+	for (int i = 0; scene.shape_list != NULL; i++)
+	{
+		puts("shape");
+		db_print_color(scene.shape_list->albedo);
+		scene.shape_list = scene.shape_list->next;
+	}
+	*/
+	return(scene);
 }
 
 t_sdist tmin(t_shape *shape_list, t_ray ray)
@@ -138,7 +211,9 @@ int calculate_color(t_ray ray, t_scene scene)
 	closest_shape = tmin(scene.shape_list, ray);
 	if (closest_shape.distance != 0)
 	{
-		normal = scene.shape_list->calculate_normal(closest_shape.distance, closest_shape.shape,ray);
+		normal = scene.shape_list->calculate_normal(closest_shape.distance, closest_shape.shape, ray);
+		if (v3f_dot(ray.direction, normal) > 0)
+			normal = v3f_multiply_x(normal, -1);
 		return (lerp_light(scene.light_list, new_ray(ray_point_at(ray, closest_shape.distance), normal),
 			closest_shape.shape.albedo, scene));
 	}
@@ -190,6 +265,18 @@ t_image
 	return (image);
 }
 
+void
+	next_view(t_scene *scene)
+{
+	scene->camera = scene->camera->next;
+	if (!scene->camera->render.img_data)
+	{
+		scene->camera->render = generate_image(scene->resolution, scene->mlx_pointer);
+		trace(*scene, scene->camera->render);
+	}
+	mlx_put_image_to_window(scene->mlx_pointer, scene->window_pointer, scene->camera->render.img_ptr, 0, 0);
+}
+
 int	mini_rt(t_scene scene)
 {
 	void	*mlx_ptr;
@@ -203,6 +290,7 @@ int	mini_rt(t_scene scene)
 	mlx_key_hook(window, k_hook, &scene);
 	scene.mlx_pointer = mlx_ptr;
 	scene.window_pointer = window;
+//	create_bitmap(scene.camera->render, "cool_pic.bmp");
 	mlx_loop(mlx_ptr);
 	return (0);
 }
@@ -212,24 +300,19 @@ int main(int ac, char **av)
 	int fd;
 	t_scene test_scene;
 
-	//window_test();
+	/*
 	test_scene.resolution = (t_vector2) {.x = 1600, .y = 800};
-	test_scene.camera = malloc(sizeof(t_cam));
-	test_scene.camera->pos = new_v3f(0, 0, 0);
-	test_scene.camera->rot = v3f_normalize(new_v3f(0.2f, 0.3f, 0.7f));
-	test_scene.camera->fov = 90;
-	calculate_rotation_data(test_scene.camera);
-	printf("%f, %f\n", test_scene.camera->rot_data.r_cos, test_scene.camera->rot_data.r_sin);
-	db_print_vector(test_scene.camera->rot_data.axe);
 	test_scene.ambient_light = (t_alight) {.intensity = 0.2f, .color = new_color(255, 255, 255)};
+	test_scene.camera = db_create_cam_list();
 	test_scene.shape_list = db_create_shape_list();
 	test_scene.light_list = db_create_light_list();
 	mini_rt(test_scene);
 	return 0;
+	*/
 	if (ac <= 1)
 		return (-1);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		return(-1);
-	get_scene_info(fd);
+	test_scene = get_scene_info(fd);
 }

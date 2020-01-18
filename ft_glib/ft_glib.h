@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 13:48:51 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/13 12:30:39 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ t_v3float		v3f_rotate(t_v3float in, t_v3float axe, float a_sin, float a_cos);
 unsigned char	sat_add(unsigned char a, unsigned char b);
 int				create_bitmap(t_image image, char *filename);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
+float			ft_fminpos(float a, float b);
 
 #endif

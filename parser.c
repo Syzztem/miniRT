@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:05:55 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/12 10:52:40 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/18 12:23:11 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void calculate_rotation_data(t_cam *cam)
 	cam->rot_data.axe = v3f_normalize(v3f_multiply_v(unit, cam->rot));
 }
 
-t_alight get_light(char *line)
+t_alight get_alight(char *line)
 {
 	t_alight out;
 
@@ -53,21 +53,5 @@ t_alight get_light(char *line)
 	while (ft_isspace(*line))
 		line++;
 	out.color = ft_atoc(line);
-	return (out);
-}
-
-t_cam *mom_get_camera(char *line)
-{
-	t_cam *out;
-
-	line++;
-	out = malloc(sizeof(t_cam));
-	while (ft_isspace(*line))
-		line++;
-	out->pos = get_v3f(&line);
-	out->rot = get_v3f(&line);
-	out->fov = ft_atoi(line);
-	calculate_rotation_data(out);
-	out->next = NULL;
 	return (out);
 }

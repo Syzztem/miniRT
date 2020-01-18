@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/12 12:15:53 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/13 16:18:32 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int k_hook(int keycode, void *param)
 	if (keycode == 53)
 	{
 		mlx_destroy_window(scene->mlx_pointer, scene->window_pointer);
+		exit(0);
 	}
+	else if(keycode == 49)
+		next_view(scene);
 	return (0);
 }

@@ -1,0 +1,6 @@
+*.o
+*/*.o
+**/*.o
+mini_rt
+img_tests/*
+*.bmp

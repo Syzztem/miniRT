@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:08:52 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/12 14:21:24 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int
 	char	*img_data;
 
 	total_size = (image.res.x * image.res.y * image.bpp + 31) / 32 * 4;
-	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, S_IWUSR);
+	fd = open(filename, O_WRONLY | O_CREAT, S_IRWXU | S_IRGRP | S_IROTH);
 	img_data = (char *)(image.img_data);
 	write(fd, "BM", 2);
 	write_int(total_size + 54, fd);

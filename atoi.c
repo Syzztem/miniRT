@@ -6,24 +6,11 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:08:46 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/27 10:03:32 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/18 13:52:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-int
-	ft_strilen(const char *str)
-{
-	int i;
-
-	i = 0;
-	if(str[i] == '-')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-		i++;
-	return i;
-}
 
 int
 	ft_isspace(int c)
@@ -36,6 +23,19 @@ int
 			|| c == ' ')
 		return (1);
 	return (0);
+}
+
+int
+	ft_strilen(const char *str)
+{
+	int i;
+
+	i = 0;
+	if(str[i] == '-')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+		i++;
+	return (i);
 }
 
 static void
@@ -79,6 +79,8 @@ float ft_atof(const char *str)
 	str += ft_strilen(str);
 	if (*str == '.')
 		str++;
+	else
+		return(integer_part);
 	decimal_part = ft_atoi(str);
 	if (integer_part == 0 && decimal_part == 0)
 		return (0);
@@ -86,7 +88,7 @@ float ft_atof(const char *str)
 	return (out);
 }
 
-int
+t_color
 	ft_atoc(const char *str)
 {
 	t_color out;
@@ -103,5 +105,5 @@ int
 	str += ft_strilen(str);
 	if (*str == ',')
 		str++;
-	return (get_color(out));
+	return (out);
 }
