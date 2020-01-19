@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/18 16:15:08 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/19 13:50:39 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ enum e_shapes
 {
 	SPHERE,
 	TRIANGLE,
-	PLANE
+	PLANE,
+	CYLINDER,
+	SQUARE
 };
 
 typedef union	u_shapes
@@ -34,6 +36,8 @@ typedef union	u_shapes
 	t_sphere	sphere;
 	t_triangle	triangle;
 	t_plane		plane;
+	t_cylinder	cylinder;
+	t_square	square;
 }				t_shapes;
 
 typedef struct	s_rot_data
@@ -115,6 +119,8 @@ void			add_cam(char *line, t_cam **cam_list);
 void			add_sphere(char *line, t_shape **shape_list);
 void			add_light(char *line, t_light **light_list);
 void			add_plane(char *line, t_shape **shape_list);
+void			add_triangle(char *line, t_shape **shape_list);
+void			add_cylinder(char *line, t_shape **shape_list);
 t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
 float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);

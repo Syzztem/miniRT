@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/13 12:30:39 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/19 13:27:00 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct	s_plane
 typedef struct	s_triangle
 {
 	t_v3float	points[3];
-	t_plane		plane;
 }				t_triangle;
 
 typedef struct	s_sphere
@@ -69,6 +68,21 @@ typedef struct	s_sphere
 	t_v3float	center;
 	float		radius;
 }				t_sphere;
+
+typedef struct	s_cylinder
+{
+	t_v3float	pos;
+	t_v3float	oritentation;
+	float		diameter;
+	float		height;
+}				t_cylinder;
+
+typedef struct	s_square
+{
+	t_v3float	pos;
+	t_v3float	orientation;
+	float		side;
+}				t_square;
 
 typedef struct	s_image
 {

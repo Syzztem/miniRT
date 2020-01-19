@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/18 16:15:45 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:59:50 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ t_scene
 		else if (!ft_strncmp("pl", line, 2))
 			add_plane(line, &scene.shape_list);
 		else if (!ft_strncmp("cy", line, 2))
-			;
+			add_cylinder(line, &scene.shape_list);
 		else if (!ft_strncmp("tr", line, 2))
-			;
+			add_triangle(line, &scene.shape_list);
 		else if (!ft_strncmp("sq", line, 2))
 			;
 		free(line);
