@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/19 13:27:00 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/20 10:59:05 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ typedef struct	s_plane
 
 typedef struct	s_triangle
 {
-	t_v3float	points[3];
+	t_v3float	vertices[3];
+	t_v3float	ab;
+	t_v3float	ac;
+	t_v3float	normal;
 }				t_triangle;
 
 typedef struct	s_sphere

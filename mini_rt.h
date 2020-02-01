@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/19 13:50:39 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/21 13:00:37 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # define VIEW_DISTANCE 10000000000
-# define EPSILON 0.00001f
+# define EPSILON 0.0001f
 
 struct s_shape;
 
@@ -121,10 +121,13 @@ void			add_light(char *line, t_light **light_list);
 void			add_plane(char *line, t_shape **shape_list);
 void			add_triangle(char *line, t_shape **shape_list);
 void			add_cylinder(char *line, t_shape **shape_list);
+void			add_square(char *line, t_shape **shape_list);
 t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
+t_v3float		calculate_triangle_normal(float f, t_shape shape, t_ray ray);
 float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);
-int				lerp_light(t_light *light, t_ray normal_ray, t_color albedo, t_scene scene);
+float			check_triangle_collisons (t_shape shape, t_ray line);
+int				lerp_light(t_light *light, t_ray normal_ray, t_shape shape, t_scene scene, float distance);
 t_light			new_light(t_v3float position, float intensity, t_color color);
 float			check_plane_collisons (t_shape shape, t_ray line);
 t_v3float		calculate_plane_normal(float f, t_shape shape, t_ray ray);

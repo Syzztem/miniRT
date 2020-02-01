@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:33:49 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/12 10:32:51 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:08:05 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_v3float
 {
 	t_v3float	out;
 
+	if (a_cos == 10)
+		return (v3f_multiply_x(in, -1));
 	if (isnan(axe.x))
 		return (in);
 	out.x = in.x * (axe.x * axe.x * (1 - a_cos) + a_cos) +

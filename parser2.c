@@ -6,13 +6,14 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 12:20:17 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/27 10:09:24 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/21 10:45:08 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_vector3 get_v3(char **str)
+t_vector3
+	get_v3(char **str)
 {
 	t_vector3 out;
 
@@ -31,7 +32,8 @@ t_vector3 get_v3(char **str)
 	return (out);
 }
 
-t_v3float get_v3f(char **str)
+t_v3float
+	get_v3f(char **str)
 {
 	t_v3float out;
 

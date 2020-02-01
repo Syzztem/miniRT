@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 16:38:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/19 14:55:43 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/01/21 16:58:17 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_cam
 	elem->fov = ft_atoi(line);
 	calculate_rotation_data(elem);
 	elem->next = NULL;
+	elem->render.img_data = NULL;
 	return (elem);
 }
 
@@ -61,7 +62,6 @@ t_shape
 	line += 2;
 	while (ft_isspace(*line))
 		line++;
-	puts(line);
 	out->shape_data.sphere.center = get_v3f(&line);
 	while (ft_isspace(*line))
 		line++;
@@ -93,11 +93,16 @@ t_shape
 	i = 0;
 	while (i < 3)
 	{
-		out->shape_data.triangle.points[i] = get_v3f(&line);
+		out->shape_data.triangle.vertices[i] = get_v3f(&line);
 		while (ft_isspace(*line))
 			line++;
 		i++;
 	}
+	out->shape_data.triangle.ab = v3f_substract_v(out->shape_data.triangle.vertices[1], out->shape_data.triangle.vertices[0]);
+	out->shape_data.triangle.ac = v3f_substract_v(out->shape_data.triangle.vertices[2], out->shape_data.triangle.vertices[0]);
+	out->shape_data.triangle.normal = v3f_multiply_v(out->shape_data.triangle.ab, out->shape_data.triangle.ac);
+	out->calculate_fun.collision = check_triangle_collisons;
+	out->calculate_normal = calculate_triangle_normal;
 	out->albedo = ft_atoc(line);
 	out->next = NULL;
 	out->type = TRIANGLE;
