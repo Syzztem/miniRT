@@ -6,16 +6,14 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/21 13:00:37 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:15:45 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
 # include "ft_glib/ft_glib.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
+# include <libgen.h>
 # include <stdio.h>
 # define VIEW_DISTANCE 10000000000
 # define EPSILON 0.0001f
@@ -109,6 +107,7 @@ float			ft_atof(const char *str);
 int				ft_isspace(int c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_strilen(const char *str);
+int				flen(char *str);
 t_color			ft_atoc(const char *str);
 float			ft_atof(const char *str);
 t_v3float		get_v3f(char **str);
@@ -124,16 +123,24 @@ void			add_cylinder(char *line, t_shape **shape_list);
 void			add_square(char *line, t_shape **shape_list);
 t_v3float		calculate_sphere_normal(float t, t_shape shape, t_ray ray);
 t_v3float		calculate_triangle_normal(float f, t_shape shape, t_ray ray);
+t_v3float		calculate_square_normal(float f, t_shape shape, t_ray ray);
+t_v3float		calculate_plane_normal(float f, t_shape shape, t_ray ray);
+t_v3float		calculate_cylinder_normal(float f, t_shape shape, t_ray ray);
 float			point_to_sphere(t_v3float point, t_sphere sphere);
 float			check_sphere_collisions(t_shape shape, t_ray line);
 float			check_triangle_collisons (t_shape shape, t_ray line);
+float			check_square_collision(t_shape shape, t_ray line);
+float			check_cylinder_collision(t_shape shape, t_ray line);
+float			plane_intersecton(t_plane plane, t_ray line);
 int				lerp_light(t_light *light, t_ray normal_ray, t_shape shape, t_scene scene, float distance);
 t_light			new_light(t_v3float position, float intensity, t_color color);
+t_image			trace(t_scene scene, t_image image);
 float			check_plane_collisons (t_shape shape, t_ray line);
-t_v3float		calculate_plane_normal(float f, t_shape shape, t_ray ray);
 void			calculate_rotation_data(t_cam *cam);
 int				k_hook(int keycode, void *param);
 void			next_view(t_scene *scene);
+void			yeet(t_scene scene, int ret);
+int				xyeet(void *param);
 
 void db_print_vector(t_v3float v);
 void db_print_color(t_color c);

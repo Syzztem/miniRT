@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/12 14:21:24 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:05:31 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,43 @@ static void
 		write(fd, &out[i], 1);
 }
 
-char
-	ft_reverse_bits(char byte)
+size_t f_strlen(char *str)
 {
-	char tmp;
+	int i;
 
-	tmp = byte >> 4;
-	byte = byte << 4;
-	byte |= tmp;
-	return (byte);
+	i = 0;
+	while(str[i])
+		i++;
+	return (i);
+}
+
+char *add_extension(char *filename)
+{
+	char *out;
+	char *str;
+
+	out = malloc(sizeof(char) * (f_strlen(filename) + 5));
+	str = out;
+	while (*filename)
+		*str++ = *filename++;
+	*str++ = '.';
+	*str++ = 'b';
+	*str++ = 'm';
+	*str++ = 'p';
+	*str++ = '\0';
+	return (out);
+}
+
+t_image
+	generate_image(t_vector2 res, void *mlx_ptr)
+{
+	t_image out;
+
+	out.img_ptr = mlx_new_image(mlx_ptr, res.x, res.y);
+	out.res = res;
+	out.img_data = (int *)mlx_get_data_addr(out.img_ptr,
+		(int *)&out.bpp, &out.size_line, &out.endian);
+	return (out);
 }
 
 int
@@ -47,6 +75,7 @@ int
 	int		total_size;
 	char	*img_data;
 
+	filename = add_extension(filename);
 	total_size = (image.res.x * image.res.y * image.bpp + 31) / 32 * 4;
 	fd = open(filename, O_WRONLY | O_CREAT, S_IRWXU | S_IRGRP | S_IROTH);
 	img_data = (char *)(image.img_data);

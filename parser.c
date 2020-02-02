@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:05:55 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/21 17:07:12 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:21:30 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,23 @@ void
 	else
 		cam->rot_data.r_cos = v3f_dot(unit, cam->rot);
 	cam->rot_data.r_sin = sinf(acosf(cam->rot_data.r_cos));
-	cam->rot_data.axe = v3f_normalize(v3f_multiply_v(unit, cam->rot));
+	cam->rot_data.axe = v3f_normalize(v3f_cross(unit, cam->rot));
+}
+
+int
+	flen(char *str)
+{
+	int i;
+
+	i = ft_strilen(str);
+	if (str[i] == '.')
+	{
+		i++;
+		i += ft_strilen(str);
+	}
+	while (ft_isspace(str[i]))
+		i++;
+	return (i);
 }
 
 t_alight

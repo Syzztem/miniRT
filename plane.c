@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 11:36:59 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/21 16:28:01 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/01 16:04:56 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int
 	float		u;
 	float		v;
 
-	pvec = v3f_multiply_v(line.direction, tri.ac);
+	pvec = v3f_cross(line.direction, tri.ac);
 	det = v3f_dot(tri.ab, pvec);
 	if (fabsf(det) < EPSILON)
 		return (0);
@@ -69,7 +69,7 @@ int
 	u = v3f_dot(tvec, pvec) * det;
 	if (u < EPSILON || u > 1 - EPSILON)
 		return (0);
-	tvec = v3f_multiply_v(tvec, tri.ab);
+	tvec = v3f_cross(tvec, tri.ab);
 	v = v3f_dot(tvec, line.direction) * det;
 	if (v < EPSILON || u + v > 1 - EPSILON)
 		return (0);

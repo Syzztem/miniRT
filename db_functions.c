@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_functions.c                                    :+:      :+:    :+:   */
+/*   db_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 13:51:54 by lothieve         ###   ########.fr       */
+/*   Created: 2020/02/02 14:35:48 by lothieve          #+#    #+#             */
+/*   Updated: 2020/02/02 14:35:59 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-int	k_hook(int keycode, void *param)
+void db_print_vector(t_v3float v)
 {
-	t_scene *scene;
-
-	scene = (t_scene*)param;
-	printf("%d\n", keycode);
-	if (keycode == 53)
-	{
-		yeet(*scene, 0);
-	}
-	else if (keycode == 49)
-		next_view(scene);
-	return (0);
+	printf("%.2f, %.2f, %.2f\n", v.x, v.y, v.z);
 }
 
-int	xyeet(void *param)
+void db_print_color(t_color c)
 {
-	yeet(*(t_scene *)param, 0);
-	return (0);
+	printf("r%d, g%d, b%d\n", c.r, c.g, c.b);
 }

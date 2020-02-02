@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 12:23:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:23:45 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/01 16:04:56 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ float
 	dir = new_v3f(line.origin.x - point.x,
 	line.origin.y - point.z,
 	line.origin.z - point.z);
-	return (v3f_magnitude(v3f_multiply_v(dir, line.direction))
+	return (v3f_magnitude(v3f_cross(dir, line.direction))
 	/ v3f_magnitude(line.direction));
 }

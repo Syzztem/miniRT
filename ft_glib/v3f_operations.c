@@ -6,14 +6,14 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:33:49 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/21 17:08:05 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/01 16:04:56 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glib.h"
 
 t_v3float
-	v3f_multiply_v(t_v3float u, t_v3float v)
+	v3f_cross(t_v3float u, t_v3float v)
 {
 	t_v3float out;
 
