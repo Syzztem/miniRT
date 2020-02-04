@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:05:31 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:22:24 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,19 @@ static void
 		write(fd, &out[i], 1);
 }
 
-size_t f_strlen(char *str)
+size_t
+	f_strlen(char *str)
 {
 	int i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	return (i);
 }
 
-char *add_extension(char *filename)
+char
+	*add_extension(char *filename)
 {
 	char *out;
 	char *str;

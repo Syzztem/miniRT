@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:57:36 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 16:00:34 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:31:58 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ t_shape
 			line++;
 		i++;
 	}
-	out->shape_data.triangle.ab = v3f_substract_v(out->shape_data.triangle.
+	out->shape_data.triangle.ab = v3f_sub(out->shape_data.triangle.
 		vertices[1], out->shape_data.triangle.vertices[0]);
-	out->shape_data.triangle.ac = v3f_substract_v(out->shape_data.triangle.
+	out->shape_data.triangle.ac = v3f_sub(out->shape_data.triangle.
 		vertices[2], out->shape_data.triangle.vertices[0]);
 	out->shape_data.triangle.normal = v3f_cross(out->shape_data.triangle.ab,
 		out->shape_data.triangle.ac);

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:44:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:00:55 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ t_plane
 t_v3float
 	ray_point_at(t_ray ray, float t)
 {
-	return (v3f_add(ray.origin, v3f_multiply_x(ray.direction, t)));
+	return (v3f_add(ray.origin, v3f_multiply(ray.direction, t)));
 }
 
 t_ray
 	ray_from_points(t_v3float a, t_v3float b)
 {
-	return (new_ray(a, v3f_substract_v(a, b)));
+	return (new_ray(a, v3f_sub(a, b)));
 }

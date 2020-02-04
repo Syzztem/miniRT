@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:56:50 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:59:03 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:22:42 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,21 @@ void
 		while (elem->next)
 			elem = elem->next;
 		elem->next = get_plane(line);
+	}
+}
+
+void
+	add_light(char *line, t_light **light_list)
+{
+	t_light *elem;
+
+	elem = *light_list;
+	if (!elem)
+		*light_list = get_light(line);
+	else
+	{
+		while (elem->next)
+			elem = elem->next;
+		elem->next = get_light(line);
 	}
 }

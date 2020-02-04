@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 13:30:26 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 13:07:57 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 float disk_collision(t_shape shape, t_ray line)
 {
-	float d;
+	float		d;
+	t_v3float	op;
+
 	if (!isnan(d = plane_intersecton(new_plane(shape.shape_data.square.orientation,
 		shape.shape_data.square.pos), line)))
 	{
-		t_v3float op = v3f_substract_v(ray_point_at(line, d), shape.shape_data.square.pos);
+		op = v3f_sub(ray_point_at(line, d), shape.shape_data.square.pos);
 		if (v3f_magnitude(op) < shape.shape_data.square.side)
 			return (d);
 	}
@@ -28,28 +30,29 @@ float disk_collision(t_shape shape, t_ray line)
 t_v3float
 	calculate_cylinder_normal(float f, t_shape shape, t_ray ray)
 {
-	t_v3float hb;
-	float scale;
-	t_v3float out;
+	t_v3float	hb;
+	float		scale;
+	t_v3float	out;
 
-	hb = v3f_substract_v(ray_point_at(ray, f), shape.shape_data.cylinder.pos);
+	hb = v3f_sub(ray_point_at(ray, f), shape.shape_data.cylinder.pos);
 	scale = v3f_dot(hb, shape.shape_data.cylinder.oritentation);
-	out = v3f_substract_v(hb, v3f_multiply_x(shape.shape_data.cylinder.oritentation, scale));
+	out = v3f_sub(hb, v3f_multiply(shape.shape_data.cylinder.oritentation, scale));
 	return (v3f_normalize(out));
 }
 
-float check_cylinder_collision(t_shape shape, t_ray line)
+float
+	check_cylinder_collision(t_shape shape, t_ray line)
 {
-	t_v3float rc;
-	t_v3float n;
-	t_v3float o;
-	float nnorm;
-	float t;
-	float s;
-	float d;
-	float lambda;
+	t_v3float 	rc;
+	t_v3float	n;
+	t_v3float	o;
+	float		nnorm;
+	float		t;
+	float		s;
+	float		d;
+	float		lambda;
 
-	rc = v3f_substract_v(line.origin, shape.shape_data.cylinder.pos);
+	rc = v3f_sub(line.origin, shape.shape_data.cylinder.pos);
 	n = v3f_cross(line.direction, shape.shape_data.cylinder.oritentation);
 	nnorm = v3f_magnitude(n);
 	if (nnorm < EPSILON && nnorm > -EPSILON)
@@ -75,8 +78,12 @@ float check_cylinder_collision(t_shape shape, t_ray line)
 			lambda = in;
 		else if (in < out)
 			lambda = in;
-		else lambda = out;
+		else 
+			lambda = out;
+		puts("hit");
+		float ldist = v3f_magnitude(v3f_sub(ray_point_at(line, lambda), shape.shape_data.cylinder.pos));
 		return (lambda);
+		return (ldist < shape.shape_data.cylinder.dh_radius ? lambda : nan(""));
 	}
 	return (nan(""));
 }

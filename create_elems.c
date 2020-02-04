@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 16:38:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 16:00:31 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 12:44:00 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ t_shape
 	out->shape_data.cylinder.oritentation = v3f_normalize(get_v3f(&line));
 	while (ft_isspace(*line))
 		line++;
-	out->shape_data.cylinder.diameter = ft_atof(line);
+	out->shape_data.cylinder.diameter = ft_atof(line) / 2.0f;
 	line += flen(line);
 	while (ft_isspace(*line))
 		line++;
-	out->shape_data.cylinder.height = ft_atof(line);
+	out->shape_data.cylinder.height = ft_atof(line) / 2.0f;
 	line += flen(line);
 	while (ft_isspace(*line))
 		line++;
@@ -86,6 +86,7 @@ t_shape
 	out->calculate_fun.collision = check_cylinder_collision;
 	out->calculate_normal = calculate_cylinder_normal;
 	out->type = CYLINDER;
+	out->shape_data.cylinder.dh_radius = sqrtf(square(out->shape_data.cylinder.diameter) + square(out->shape_data.cylinder.height));
 	return (out);
 }
 
@@ -118,21 +119,5 @@ void
 		while (elem->next)
 			elem = elem->next;
 		elem->next = get_cylinder(line);
-	}
-}
-
-void
-	add_light(char *line, t_light **light_list)
-{
-	t_light *elem;
-
-	elem = *light_list;
-	if (!elem)
-		*light_list = get_light(line);
-	else
-	{
-		while (elem->next)
-			elem = elem->next;
-		elem->next = get_light(line);
 	}
 }

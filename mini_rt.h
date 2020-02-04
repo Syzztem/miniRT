@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:15:45 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:26:16 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 struct s_shape;
 
-enum e_shapes
+enum	e_shapes
 {
 	SPHERE,
 	TRIANGLE,
@@ -82,7 +82,7 @@ typedef struct	s_shape
 	t_shapes		shape_data;
 	struct s_shape	*next;
 	t_func_types	calculate_fun;
-	t_v3float		(*calculate_normal) (float t, struct s_shape shape, t_ray ray);
+	t_v3float		(*calculate_normal) (float t, struct s_shape s, t_ray ray);
 }				t_shape;
 
 typedef struct	s_sdist
@@ -132,8 +132,9 @@ float			check_triangle_collisons (t_shape shape, t_ray line);
 float			check_square_collision(t_shape shape, t_ray line);
 float			check_cylinder_collision(t_shape shape, t_ray line);
 float			plane_intersecton(t_plane plane, t_ray line);
-int				lerp_light(t_light *light, t_ray normal_ray, t_shape shape, t_scene scene, float distance);
+int				lerp_light(t_ray nr, t_shape sh, t_scene scn);
 t_light			new_light(t_v3float position, float intensity, t_color color);
+t_light			*get_light(char *line);
 t_image			trace(t_scene scene, t_image image);
 float			check_plane_collisons (t_shape shape, t_ray line);
 void			calculate_rotation_data(t_cam *cam);
@@ -142,7 +143,7 @@ void			next_view(t_scene *scene);
 void			yeet(t_scene scene, int ret);
 int				xyeet(void *param);
 
-void db_print_vector(t_v3float v);
-void db_print_color(t_color c);
+void			db_print_vector(t_v3float v);
+void			db_print_color(t_color c);
 
 #endif

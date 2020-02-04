@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:05:41 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdlib.h>
+# include <CoreGraphics/CGDisplayConfiguration.h>
 
 typedef float **t_matrix;
 
@@ -81,6 +82,7 @@ typedef struct	s_cylinder
 	t_v3float	oritentation;
 	float		diameter;
 	float		height;
+	float		dh_radius;
 }				t_cylinder;
 
 typedef struct	s_square
@@ -109,10 +111,10 @@ float			v3f_dot(t_v3float u, t_v3float v);
 t_v3float		new_v3f(float x, float y, float z);
 t_v3float		to_v3f(t_vector3 v);
 t_v3float		v3f_cross(t_v3float u, t_v3float v);
-t_v3float		v3f_multiply_x(t_v3float u, float n);
+t_v3float		v3f_multiply(t_v3float u, float n);
 t_v3float		v3f_divide_x(t_v3float u, float n);
 t_v3float		v3f_normalize(t_v3float v);
-t_v3float		v3f_substract_v(t_v3float u, t_v3float v);
+t_v3float		v3f_sub(t_v3float u, t_v3float v);
 t_v3float		v3f_add(t_v3float u, t_v3float v);
 t_v3float		ray_point_at(t_ray ray, float t);
 t_v3float		matxvec(t_matrix mat, t_v3float vec);
@@ -126,7 +128,7 @@ t_color			col_add(t_color a, t_color b);
 t_color			col_multiply_c(t_color a, t_color b);
 t_matrix		initialize_matrix();
 t_plane			new_plane(t_v3float normal, t_v3float p);
-t_v3float		v3f_rotate(t_v3float in, t_v3float axe, float a_sin, float a_cos);
+t_v3float		v3f_rotate(t_v3float in, t_v3float axe, float s, float c);
 t_image			generate_image(t_vector2 res, void *mlx_ptr);
 unsigned char	sat_add(unsigned char a, unsigned char b);
 int				create_bitmap(t_image image, char *filename);

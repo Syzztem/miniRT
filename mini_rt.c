@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:06:02 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:43:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,31 @@ void
 }
 
 t_scene
+	parse_line(char *line, t_scene scene)
+{
+	if (*line == 'R')
+		scene.resolution = get_res(line);
+	else if (*line == 'A')
+		scene.ambient_light = get_alight(line);
+	else if (*line == 'l')
+		add_light(line, &scene.light_list);
+	else if (*line == 'c' && ft_isspace(*(line + 1)))
+		add_cam(line, &scene.camera);
+	else if (!ft_strncmp("sp", line, 2))
+		add_sphere(line, &scene.shape_list);
+	else if (!ft_strncmp("pl", line, 2))
+		add_plane(line, &scene.shape_list);
+	else if (!ft_strncmp("cy", line, 2))
+		add_cylinder(line, &scene.shape_list);
+	else if (!ft_strncmp("tr", line, 2))
+		add_triangle(line, &scene.shape_list);
+	else if (!ft_strncmp("sq", line, 2))
+		add_square(line, &scene.shape_list);
+	free(line);
+	return (scene);
+}
+
+t_scene
 	get_scene_info(int fd)
 {
 	char	*line;
@@ -36,27 +61,7 @@ t_scene
 	scene.shape_list = NULL;
 	scene.light_list = NULL;
 	while (get_next_line(fd, &line))
-	{
-		if (*line == 'R')
-			scene.resolution = get_res(line);
-		else if (*line == 'A')
-			scene.ambient_light = get_alight(line);
-		else if (*line == 'l')
-			add_light(line, &scene.light_list);
-		else if (*line == 'c' && ft_isspace(*(line + 1)))
-			add_cam(line, &scene.camera);
-		else if (!ft_strncmp("sp", line, 2))
-			add_sphere(line, &scene.shape_list);
-		else if (!ft_strncmp("pl", line, 2))
-			add_plane(line, &scene.shape_list);
-		else if (!ft_strncmp("cy", line, 2))
-			add_cylinder(line, &scene.shape_list);
-		else if (!ft_strncmp("tr", line, 2))
-			add_triangle(line, &scene.shape_list);
-		else if (!ft_strncmp("sq", line, 2))
-			add_square(line, &scene.shape_list);
-		free(line);
-	}
+		scene = parse_line(line, scene);
 	finish_cam_list(scene.camera);
 	return (scene);
 }
@@ -109,5 +114,5 @@ int
 	if (fd == -1)
 		return (-1);
 	test_scene = get_scene_info(fd);
-	mini_rt(test_scene, savemode, basename(filename));
+	mini_rt(test_scene, savemode, filename);
 }
