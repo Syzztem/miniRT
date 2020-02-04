@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 16:21:32 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:08:53 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	k_hook(int keycode, void *param)
 	}
 	else if (keycode == 49)
 		next_view(scene);
+	else if (keycode == 1)
+		create_bitmap(scene->camera->render, "render");
 	return (0);
 }
 

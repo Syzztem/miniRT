@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 16:22:24 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:59:42 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,13 @@ int
 {
 	int		fd;
 	int		total_size;
+	int		line_size;
 	char	*img_data;
+	int		i;
 
 	filename = add_extension(filename);
-	total_size = (image.res.x * image.res.y * image.bpp + 31) / 32 * 4;
+	line_size = (image.res.x * image.bpp + 31) / 32 * 4;
+	total_size = line_size * image.res.y;
 	fd = open(filename, O_WRONLY | O_CREAT, S_IRWXU | S_IRGRP | S_IROTH);
 	img_data = (char *)(image.img_data);
 	write(fd, "BM", 2);
@@ -91,6 +94,11 @@ int
 	write(fd, "\0\0\0\0\0", 5);
 	write_int(total_size, fd);
 	write(fd, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16);
-	write(fd, img_data, total_size);
+	i = total_size;
+	while (i > 0)
+	{
+		i -= line_size;
+		write(fd, img_data + i, line_size);
+	}
 	return (0);
 }
