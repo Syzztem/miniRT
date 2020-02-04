@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:33:56 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 16:14:45 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ int
 	while (shape_list)
 	{
 		col_dist = -shape_list->calculate_fun.collision(*shape_list, ray);
-		if (!isnan(col_dist) && col_dist < distance - 0.01f)
-		{
+		if (!isnan(col_dist) && col_dist < distance - 0.01f && col_dist > EPSILON)
 			return (1);
-		}
 		shape_list = shape_list->next;
 	}
 	return (0);

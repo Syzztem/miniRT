@@ -6,11 +6,32 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:43:24 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:31:58 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:49:01 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
+
+float
+	ft_fminpos(float a, float b)
+{
+	float lambda;
+
+	if (a < -EPSILON)
+	{
+		if (b < -EPSILON)
+			return (nan(""));
+		else
+			lambda = b;
+	}
+	else if (b < -EPSILON)
+		lambda = a;
+	else if (a < b)
+		lambda = a;
+	else 
+		lambda = b;
+	return (lambda);
+}
 
 float
 	check_sphere_collisions(t_shape shape, t_ray line)
