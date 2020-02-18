@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:08:46 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/21 10:41:43 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 17:00:38 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int
 	return (out * sign);
 }
 
-float
+double
 	ft_atof(const char *str)
 {
 	int		integer_part;
 	int		decimal_part;
-	float	out;
+	double	out;
 
 	integer_part = ft_atoi(str);
 	str += ft_strilen(str);
@@ -72,7 +72,7 @@ float
 	decimal_part = ft_atoi(str);
 	if (integer_part == 0 && decimal_part == 0)
 		return (0);
-	out = (float)integer_part + (float)decimal_part / (ft_strilen(str) * 10);
+	out = (double)integer_part + (double)decimal_part / (ft_strilen(str) * 10);
 	return (out);
 }
 
@@ -85,13 +85,15 @@ t_color
 	str += ft_strilen(str);
 	if (*str == ',')
 		str++;
+	else
+		g_error = 1;
 	out.g = ft_atoi(str);
 	str += ft_strilen(str);
 	if (*str == ',')
 		str++;
+	else
+		g_error = 1;
 	out.b = ft_atoi(str);
 	str += ft_strilen(str);
-	if (*str == ',')
-		str++;
 	return (out);
 }

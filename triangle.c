@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 16:24:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:54:51 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int
 	triangle_hit_or_miss(t_triangle tri, t_ray line)
 {
-	t_v3float	tvec;
-	t_v3float	pvec;
-	float		det;
-	float		u;
-	float		v;
+	t_v3double	tvec;
+	t_v3double	pvec;
+	double		det;
+	double		u;
+	double		v;
 
 	pvec = v3f_cross(line.direction, tri.ac);
 	det = v3f_dot(tri.ab, pvec);
-	if (fabsf(det) < EPSILON)
+	if (fabs(det) < EPSILON)
 		return (0);
 	det = 1 / det;
 	tvec = v3f_sub(line.origin, tri.vertices[0]);
@@ -37,7 +37,7 @@ int
 	return (1);
 }
 
-float
+double
 	check_triangle_collisons(t_shape shape, t_ray line)
 {
 	if (triangle_hit_or_miss(shape.shape_data.triangle, line))
@@ -47,8 +47,8 @@ float
 		return (nan(""));
 }
 
-t_v3float
-	calculate_triangle_normal(float f, t_shape shape, t_ray ray)
+t_v3double
+	calculate_triangle_normal(double f, t_shape shape, t_ray ray)
 {
 	(void)f;
 	if (v3f_dot(ray.direction, shape.shape_data.triangle.normal) > 0)

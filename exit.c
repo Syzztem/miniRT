@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 13:13:45 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:09:07 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:33:10 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,20 @@ void
 }
 
 void
-	yeet(t_scene scene, int ret)
+	ft_puts(const char *str)
+{
+	write(1, str, f_strlen(str));
+}
+
+void
+	yeet(t_scene scene, int ret, char *error_str)
 {
 	free_cam_list(scene.camera, scene.mlx_pointer);
 	free_shape_list(scene.shape_list);
 	free_light_list(scene.light_list);
-	mlx_destroy_window(scene.mlx_pointer, scene.window_pointer);
+	if (ret == 0)
+		mlx_destroy_window(scene.mlx_pointer, scene.window_pointer);
+	if (error_str)
+		ft_puts(error_str);
 	exit(ret);
 }

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 17:38:06 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_sdist
 	tmin(t_shape *shape_list, t_ray ray)
 {
 	t_sdist	sdist;
-	float	t;
+	double	t;
 
 	sdist.distance = 0;
 	while (shape_list)
@@ -33,9 +33,9 @@ t_sdist
 int
 	calculate_color(t_ray ray, t_scene scene)
 {
-	t_v3float	normal;
+	t_v3double	normal;
 	t_sdist		closest_shape;
-	float		t;
+	double		t;
 
 	closest_shape = tmin(scene.shape_list, ray);
 	if (closest_shape.distance != 0)
@@ -62,7 +62,7 @@ t_image
 {
 	int		i;
 	int		j;
-	float	dist_to_screen;
+	double	dist_to_screen;
 	t_ray	r;
 
 	dist_to_screen = scene.resolution.x /

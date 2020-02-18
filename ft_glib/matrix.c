@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 14:56:11 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:19:55 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:49:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 t_matrix	initialize_matrix(void)
 {
-	float	**mat;
+	double	**mat;
 	int		i;
 
-	mat = malloc(sizeof(float*) * 4);
+	mat = malloc(sizeof(double*) * 4);
 	i = 0;
 	while (i < 4)
-		mat[i++] = malloc(sizeof(float) * 4);
+		mat[i++] = malloc(sizeof(double) * 4);
 	mat[0][0] = 1;
 	mat[0][1] = 0;
 	mat[0][2] = 0;
@@ -41,12 +41,12 @@ t_matrix	initialize_matrix(void)
 	return (mat);
 }
 
-t_v3float	matxvec(t_matrix mat, t_v3float vec)
+t_v3double	matxvec(t_matrix mat, t_v3double vec)
 {
-	float a;
-	float b;
-	float c;
-	float w;
+	double a;
+	double b;
+	double c;
+	double w;
 
 	a = vec.x * mat[0][0] + vec.y * mat[1][0] + vec.z * mat[2][0] + mat[3][0];
 	b = vec.x * mat[0][1] + vec.y * mat[1][1] + vec.z * mat[2][1] + mat[3][1];
@@ -55,9 +55,9 @@ t_v3float	matxvec(t_matrix mat, t_v3float vec)
 	return (new_v3f(a / w, b / w, c / w));
 }
 
-t_v3float	matxdir(t_matrix mat, t_v3float dir)
+t_v3double	matxdir(t_matrix mat, t_v3double dir)
 {
-	t_v3float out;
+	t_v3double out;
 
 	out.x = dir.x * mat[0][0] + dir.y * mat[1][0] + dir.z * mat[2][0];
 	out.y = dir.x * mat[0][1] + dir.y * mat[1][1] + dir.z * mat[2][1];

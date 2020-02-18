@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:59:42 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:23:10 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void
 }
 
 size_t
-	f_strlen(char *str)
+	f_strlen(const char *str)
 {
 	int i;
 

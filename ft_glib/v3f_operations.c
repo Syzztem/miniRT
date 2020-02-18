@@ -6,16 +6,16 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:33:49 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:46:14 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glib.h"
 
-t_v3float
-	v3f_cross(t_v3float u, t_v3float v)
+t_v3double
+	v3f_cross(t_v3double u, t_v3double v)
 {
-	t_v3float out;
+	t_v3double out;
 
 	out.x = u.y * v.z - u.z * v.y;
 	out.y = u.z * v.x - u.x * v.z;
@@ -23,14 +23,14 @@ t_v3float
 	return (out);
 }
 
-float
-	v3f_dot(t_v3float u, t_v3float v)
+double
+	v3f_dot(t_v3double u, t_v3double v)
 {
 	return (u.x * v.x + u.y * v.y + u.z * v.z);
 }
 
-t_v3float
-	v3f_add(t_v3float u, t_v3float v)
+t_v3double
+	v3f_add(t_v3double u, t_v3double v)
 {
 	u.x += v.x;
 	u.y += v.y;
@@ -38,10 +38,10 @@ t_v3float
 	return (u);
 }
 
-t_v3float
-	v3f_rotate(t_v3float in, t_v3float axe, float a_sin, float a_cos)
+t_v3double
+	v3f_rotate(t_v3double in, t_v3double axe, double a_sin, double a_cos)
 {
-	t_v3float	out;
+	t_v3double	out;
 
 	if (a_cos == 10)
 		return (v3f_multiply(in, -1));
@@ -59,8 +59,8 @@ t_v3float
 	return (out);
 }
 
-t_v3float
-	v3f_sub(t_v3float u, t_v3float v)
+t_v3double
+	v3f_sub(t_v3double u, t_v3double v)
 {
 	u.x -= v.x;
 	u.y -= v.y;

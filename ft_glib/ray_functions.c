@@ -6,14 +6,14 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:44:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:32:46 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:48:38 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glib.h"
 
 t_ray
-	new_ray(t_v3float origin, t_v3float direction)
+	new_ray(t_v3double origin, t_v3double direction)
 {
 	t_ray ray;
 
@@ -23,7 +23,7 @@ t_ray
 }
 
 t_sphere
-	new_sphere(t_v3float center, float radius)
+	new_sphere(t_v3double center, double radius)
 {
 	t_sphere sphere;
 
@@ -33,7 +33,7 @@ t_sphere
 }
 
 t_plane
-	new_plane(t_v3float normal, t_v3float p)
+	new_plane(t_v3double normal, t_v3double p)
 {
 	t_plane plane;
 
@@ -42,14 +42,14 @@ t_plane
 	return (plane);
 }
 
-t_v3float
-	ray_point_at(t_ray ray, float t)
+t_v3double
+	ray_point_at(t_ray ray, double t)
 {
 	return (v3f_add(ray.origin, v3f_multiply(ray.direction, t)));
 }
 
 t_ray
-	ray_from_points(t_v3float a, t_v3float b)
+	ray_from_points(t_v3double a, t_v3double b)
 {
 	return (new_ray(a, v3f_sub(a, b)));
 }

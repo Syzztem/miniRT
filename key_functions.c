@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 14:08:53 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:26:53 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	k_hook(int keycode, void *param)
 	printf("%d\n", keycode);
 	if (keycode == 53)
 	{
-		yeet(*scene, 0);
+		yeet(*scene, 0, NULL);
 	}
 	else if (keycode == 49)
 		next_view(scene);
@@ -31,6 +31,6 @@ int	k_hook(int keycode, void *param)
 
 int	xyeet(void *param)
 {
-	yeet(*(t_scene *)param, 0);
+	yeet(*(t_scene *)param, 0, NULL);
 	return (0);
 }

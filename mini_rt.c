@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 16:43:13 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 17:02:18 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ t_scene
 	parse_line(char *line, t_scene scene)
 {
 	if (*line == 'R')
-		scene.resolution = get_res(line);
+		scene.resolution = scene.resolution.x == -1 ? get_res(line) :
+			(t_vector2){.x = -1, .y = -1};
 	else if (*line == 'A')
-		scene.ambient_light = get_alight(line);
+		scene.ambient_light = scene.ambient_light.intensity == -1 ?
+			get_alight(line) : (t_alight)
+			{.intensity = -1, .color = new_color(0, 0, 0)};
 	else if (*line == 'l')
 		add_light(line, &scene.light_list);
 	else if (*line == 'c' && ft_isspace(*(line + 1)))
@@ -60,9 +63,14 @@ t_scene
 	scene.camera = NULL;
 	scene.shape_list = NULL;
 	scene.light_list = NULL;
+	scene.resolution = (t_vector2){.x = -1, .y = -1};
+	scene.ambient_light.intensity = -1;
 	while (get_next_line(fd, &line))
 		scene = parse_line(line, scene);
 	finish_cam_list(scene.camera);
+	if (scene.ambient_light.intensity == -1 || scene.resolution.x == -1 
+		|| !scene.camera || !scene.light_list || !scene.shape_list)
+		yeet(scene, 1, "Error: invalid file\n");
 	return (scene);
 }
 
@@ -100,6 +108,7 @@ int
 	char	*filename;
 
 	i = 0;
+	g_error = 0;
 	savemode = 0;
 	if (ac <= 1)
 		return (-1);

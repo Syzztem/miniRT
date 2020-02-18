@@ -6,16 +6,16 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 16:14:45 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:48:53 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
 int
-	any_collision(t_ray ray, t_shape *shape_list, float distance)
+	any_collision(t_ray ray, t_shape *shape_list, double distance)
 {
-	float col_dist;
+	double col_dist;
 
 	while (shape_list)
 	{
@@ -31,7 +31,7 @@ int
 	lerp_light(t_ray normal_ray, t_shape shape, t_scene scene)
 {
 	t_ray	light_ray;
-	float	multiplier;
+	double	multiplier;
 	t_color	color;
 	t_light *light;
 
@@ -56,7 +56,7 @@ int
 }
 
 t_light
-	new_light(t_v3float position, float intensity, t_color color)
+	new_light(t_v3double position, double intensity, t_color color)
 {
 	return ((t_light) {.position = position,
 		.intensity = intensity, .color = color});

@@ -6,55 +6,30 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 12:20:17 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/21 10:45:08 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:55:28 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_vector3
-	get_v3(char **str)
-{
-	t_vector3 out;
-
-	out.x = ft_atoi(*str);
-	(*str) += ft_strilen(*str);
-	if (**str == ',')
-		(*str)++;
-	out.y = ft_atoi(*str);
-	(*str) += ft_strilen(*str);
-	if (**str == ',')
-		(*str)++;
-	out.z = ft_atoi(*str);
-	(*str) += ft_strilen(*str);
-	while (ft_isspace(**str))
-		(*str)++;
-	return (out);
-}
-
-t_v3float
+t_v3double
 	get_v3f(char **str)
 {
-	t_v3float out;
+	t_v3double out;
 
 	out.x = ft_atof(*str);
-	(*str) += ft_strilen(*str);
-	if (**str == '.')
-		(*str)++;
-	(*str) += ft_strilen(*str);
+	(*str) += flen(*str);
 	if (**str == ',')
 		(*str)++;
+	else
+		g_error = 1;
 	out.y = ft_atof(*str);
-	(*str) += ft_strilen(*str);
-	if (**str == '.')
-		(*str)++;
-	*str += ft_strilen(*str);
+	(*str) += flen(*str);
 	if (**str == ',')
 		(*str)++;
+	else
+		g_error = 1;
 	out.z = ft_atof(*str);
-	(*str) += ft_strilen(*str);
-	if (**str == '.')
-		(*str)++;
-	*str += ft_strilen(*str);
+	(*str) += flen(*str);
 	return (out);
 }

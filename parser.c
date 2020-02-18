@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:05:55 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/02 15:21:30 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:39:05 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_vector2
 	out.x = ft_atoi(line);
 	while (*line >= '0' && *line <= '9')
 		line++;
+	if (*line != ' ')
+		g_error = 1;
 	out.y = ft_atoi(line);
 	return (out);
 }
@@ -43,7 +45,7 @@ t_vector2
 void
 	calculate_rotation_data(t_cam *cam)
 {
-	t_v3float unit;
+	t_v3double unit;
 
 	unit = new_v3f(0, 0, 1);
 	if (cam->rot.x == 0 && cam->rot.y == 0 && cam->rot.z == -1)
