@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 16:38:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 17:19:15 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:06:18 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ t_cylinder
 	t_ray cyr;
 
 	cyr = new_ray(cy.pos, cy.orientation);
-	cy.dh_radius = sqrtf(square(cy.radius) + square(cy.height));
 	cy.capa = ray_point_at(cyr, cy.height);
 	cy.capb = ray_point_at(cyr, -cy.height);
 	cy.normal = malloc(sizeof(t_v3double));
+	cy.ca = v3f_sub(cy.capb, cy.capa);
+	cy.caca = v3f_dot(cy.ca, cy.ca);
 	return (cy);
 }
 

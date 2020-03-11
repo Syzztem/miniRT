@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:43:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 18:16:37 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:49:57 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ double
 		lambda = a;
 	else if (a < b)
 		lambda = a;
-	else 
+	else
 		lambda = b;
 	return (lambda);
 }
@@ -46,7 +46,7 @@ double
 	if (isnan(delta))
 		return (delta);
 	b /= 2 * a;
-	return (ft_fminpos(-b -delta, delta - b));
+	return (ft_fminpos(-b - delta, delta - b));
 }
 
 double

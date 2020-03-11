@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 16:23:10 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:53:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_image
 {
 	t_image out;
 
-	out.img_ptr = mlx_new_image(mlx_ptr, res.x, res.y);
+	if(!(out.img_ptr = mlx_new_image(mlx_ptr, res.x, res.y)))
+		exit(1);
 	out.res = res;
 	out.img_data = (int *)mlx_get_data_addr(out.img_ptr,
 		(int *)&out.bpp, &out.size_line, &out.endian);

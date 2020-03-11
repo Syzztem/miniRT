@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:08:46 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 17:00:38 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:45:14 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,24 @@ t_color
 	t_color out;
 
 	out.r = ft_atoi(str);
+	if ((int)out.r != ft_atoi(str))
+		g_error = 1;
 	str += ft_strilen(str);
 	if (*str == ',')
 		str++;
 	else
 		g_error = 1;
 	out.g = ft_atoi(str);
+	if ((int)out.g != ft_atoi(str))
+		g_error = 1;
 	str += ft_strilen(str);
 	if (*str == ',')
 		str++;
 	else
 		g_error = 1;
 	out.b = ft_atoi(str);
+	if ((int)out.b != ft_atoi(str))
+		g_error = 1;
 	str += ft_strilen(str);
 	return (out);
 }

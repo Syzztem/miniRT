@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:57:36 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/04 13:31:58 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:34:40 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_shape
 		vertices[1], out->shape_data.triangle.vertices[0]);
 	out->shape_data.triangle.ac = v3f_sub(out->shape_data.triangle.
 		vertices[2], out->shape_data.triangle.vertices[0]);
-	out->shape_data.triangle.normal = v3f_cross(out->shape_data.triangle.ab,
-		out->shape_data.triangle.ac);
+	out->shape_data.triangle.normal = v3f_normalize(v3f_cross(out->shape_data.triangle.ab,
+		out->shape_data.triangle.ac));
 	out->calculate_fun.collision = check_triangle_collisons;
 	out->calculate_normal = calculate_triangle_normal;
 	out->albedo = ft_atoc(line);

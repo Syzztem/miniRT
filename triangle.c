@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 16:24:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/10 15:54:51 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:36:31 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_v3double
 {
 	(void)f;
 	if (v3f_dot(ray.direction, shape.shape_data.triangle.normal) > 0)
-		return (shape.shape_data.plane.normal);
+		return (shape.shape_data.triangle.normal);
 	else
 		return (v3f_multiply(shape.shape_data.triangle.normal, -1));
 }

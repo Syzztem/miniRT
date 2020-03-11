@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 13:13:45 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 16:33:10 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:33:52 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void
 	while (current)
 	{
 		next = current->next;
+		if (current->type == CYLINDER)
+			free(current->shape_data.cylinder.normal);
 		free(current);
 		current = next;
 	}
@@ -68,10 +70,11 @@ void
 	}
 }
 
-void
-	ft_puts(const char *str)
+int
+	ft_puts(const char *str, int ret)
 {
 	write(1, str, f_strlen(str));
+	return (ret);
 }
 
 void
@@ -83,6 +86,6 @@ void
 	if (ret == 0)
 		mlx_destroy_window(scene.mlx_pointer, scene.window_pointer);
 	if (error_str)
-		ft_puts(error_str);
+		ft_puts(error_str, 0);
 	exit(ret);
 }

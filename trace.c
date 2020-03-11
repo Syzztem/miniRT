@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 17:38:06 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/02/18 14:52:11 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,12 @@ t_sdist
 int
 	calculate_color(t_ray ray, t_scene scene)
 {
-	t_v3double	normal;
 	t_sdist		closest_shape;
-	double		t;
 
 	closest_shape = tmin(scene.shape_list, ray);
-	if (closest_shape.distance != 0)
-	{
-		normal = closest_shape.shape.calculate_normal(
-			closest_shape.distance, closest_shape.shape, ray);
-		if (v3f_dot(ray.direction, normal) > 0)
-			normal = v3f_multiply(normal, -1);
-		return (lerp_light(new_ray(ray_point_at(ray,
-			closest_shape.distance), normal), closest_shape.shape, scene));
-	}
-	t = 1 - (ray.direction.y + 1) * 0.5f;
-	return (0);
+	if (closest_shape.distance == 0)
+		return (0);
+	return blend_light(closest_shape, scene, ray);
 }
 
 void

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 16:55:39 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:34:10 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # include "ft_glib/ft_glib.h"
 # include <libgen.h>
 # include <stdio.h>
-# define VIEW_DISTANCE 10000000000
+# define MAX_RES_X 2560
+# define MAX_RES_Y 1440
 
 struct s_shape;
 
@@ -109,6 +110,8 @@ int				ft_isspace(int c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_strilen(const char *str);
 int				flen(char *str);
+int				blend_light(t_sdist surface, t_scene scene, t_ray cam_ray);
+int				ft_puts(const char *str, int ret);
 t_color			ft_atoc(const char *str);
 double			ft_atof(const char *str);
 t_v3double		get_v3f(char **str);
@@ -133,7 +136,6 @@ double			check_square_collision(t_shape shape, t_ray line);
 double			check_cylinder_collision(t_shape shape, t_ray line);
 double			check_plane_collisons(t_shape shape, t_ray line);
 double			plane_intersecton(t_plane plane, t_ray line);
-int				lerp_light(t_ray nr, t_shape sh, t_scene scn);
 t_light			new_light(t_v3double position, double intensity, t_color color);
 t_light			*get_light(char *line);
 t_image			trace(t_scene scene, t_image image);

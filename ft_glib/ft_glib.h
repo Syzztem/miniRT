@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 18:17:43 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:04:59 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ typedef struct	s_cylinder
 	t_v3double	orientation;
 	t_v3double	capa;
 	t_v3double	capb;
+	t_v3double	ca;
 	t_v3double	*normal;
+	double		caca;
 	double		radius;
 	double		height;
-	double		dh_radius;
 }				t_cylinder;
 
 typedef struct	s_square

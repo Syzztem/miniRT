@@ -6,51 +6,55 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/10 15:48:53 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 14:24:37 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-int
-	any_collision(t_ray ray, t_shape *shape_list, double distance)
+int any_hit(t_ray light_ray, t_shape *shapes, double distance, t_sdist surface)
 {
-	double col_dist;
+	double dist;
 
-	while (shape_list)
+	(void) surface;
+	while (shapes)
 	{
-		col_dist = -shape_list->calculate_fun.collision(*shape_list, ray);
-		if (!isnan(col_dist) && col_dist < distance - 0.01f && col_dist > EPSILON)
-			return (1);
-		shape_list = shape_list->next;
+		dist = shapes->calculate_fun.collision(*shapes, light_ray);
+		if (!isnan(dist) && dist > 0.01f && dist < distance - 0.01f)
+		{
+	//		if (!(surface.shape.type == CYLINDER && shapes->type == CYLINDER))
+				return (1);
+		}
+		shapes = shapes->next;
 	}
 	return (0);
 }
 
-int
-	lerp_light(t_ray normal_ray, t_shape shape, t_scene scene)
+int blend_light(t_sdist surface, t_scene scene, t_ray cam_ray)
 {
-	t_ray	light_ray;
-	double	multiplier;
-	t_color	color;
-	t_light *light;
+	t_v3double	normal;
+	t_v3double	hit_position;
+	t_color		color;
+	t_ray		light_ray;
+	t_v3double	v;
 
-	light = scene.light_list;
-	color = new_color(0, 0, 0);
-	while (light)
+	hit_position = ray_point_at(cam_ray, surface.distance);
+	color = col_multiply_c(surface.shape.albedo,
+		col_multiply(scene.ambient_light.color, scene.ambient_light.intensity));
+	normal = surface.shape.calculate_normal(surface.distance, surface.shape, cam_ray);
+	while (scene.light_list)
 	{
-		light_ray = ray_from_points(light->position, normal_ray.origin);
-		color = col_add(col_multiply_c(shape.albedo,
-			col_multiply(scene.ambient_light.color,
-			scene.ambient_light.intensity)), color);
-		if (!any_collision(light_ray, scene.shape_list, v3f_magnitude(v3f_sub(light->position, normal_ray.origin))))
+		v = v3f_sub(hit_position, scene.light_list->position);
+		light_ray = new_ray(scene.light_list->position, v);
+		if (!any_hit(light_ray, scene.shape_list, v3f_magnitude(v), surface))
 		{
-			multiplier = light->intensity *
-				fmax(v3f_dot(normal_ray.direction, light_ray.direction), 0);
-			color = col_add(col_multiply_c(shape.albedo,
-				col_multiply(light->color, multiplier)), color);
+			color = col_add(col_multiply_c(surface.shape.albedo, 
+				col_multiply(scene.light_list->color, fabs(v3f_dot(normal,
+					light_ray.direction)) * scene.light_list->intensity)), color);
 		}
-		light = light->next;
+		scene.light_list = scene.light_list->next;
+//		if (surface.shape.type == CYLINDER)
+//			db_print_vector(normal);
 	}
 	return (get_color(color));
 }

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 13:30:26 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/18 10:17:32 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:48:20 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 t_v3double
 	get_cylinder_normal(double f, t_cylinder cy, t_ray ray)
 {
-	t_v3double	hb;
-	t_v3double	out;
+	t_v3double	r;
+	t_v3double	n;
 
-	hb = v3f_sub(ray_point_at(ray, f), cy.pos);
-	hb = v3f_cross(cy.orientation, hb);
-	out = v3f_cross(cy.orientation, hb);
-	return (v3f_normalize(out));
+	r = v3f_add(ray.origin, v3f_multiply(ray.direction, f));
+	n = v3f_sub(r, cy.pos);
+	n = v3f_cross(n, cy.orientation);
+	n = v3f_normalize(v3f_cross(n, cy.orientation));
+	return (n);
 }
 
 t_v3double calculate_cylinder_normal(double f, t_shape shape, t_ray ray)
@@ -32,69 +33,51 @@ t_v3double calculate_cylinder_normal(double f, t_shape shape, t_ray ray)
 }
 
 double
-	cap_cylinder(t_cylinder cy, t_ray ray, double dist)
+	cy_cap(t_cylinder cy, t_v3double poly, t_v3double tyh)
 {
-	double hitdist;
-	double cad;
-	double cbd;
-
-	if (isnan(dist))
-		return (dist);
-	hitdist = v3f_magnitude(v3f_sub(ray_point_at(ray, dist), cy.pos));
-	if (hitdist < cy.dh_radius)
-	{
-		*cy.normal = get_cylinder_normal(hitdist, cy, ray);
-		return (hitdist);
-	}
-	cad = plane_intersecton(new_plane(cy.orientation, cy.capa), ray);
-	cbd = plane_intersecton(new_plane(cy.orientation, cy.capb), ray);
-	dist = ft_fminpos(cad, cbd);
-	if (isnan(dist))
-		return (dist);
-	hitdist = v3f_magnitude(v3f_sub(ray_point_at(ray, dist), dist == cad ? cy.capa : cy.capb));
-	if (hitdist <= cy.radius)
+    if(fabs(poly.y + poly.x * tyh.x) < tyh.z)
 	{
 		*cy.normal = cy.orientation;
-		return (dist);
+		return (tyh.x);
 	}
-	return (nan(""));
+    return (nan(""));
 }
 
-/*
+double
+	cy_col_2(t_cylinder cy, t_ray ray, t_v3double oc, double card)
+{
+	t_v3double poly;
+	t_v3double tyh;
+    double caoc;
+	
+	caoc = v3f_dot(cy.ca, oc);
+    poly.x = cy.caca - card*card;
+    poly.y = cy.caca * v3f_dot(oc, ray.direction) - caoc * card;
+    poly.z = cy.caca * v3f_dot(oc, oc) - caoc * caoc - cy.radius
+		* cy.radius * cy.caca;
+    tyh.z = poly.y * poly.y - poly.x * poly.z;
+    if(tyh.z < 0.0 )
+		return (nan(""));
+    tyh.z = sqrt(tyh.z);
+    tyh.x = (-poly.y - tyh.z) / poly.x;
+    tyh.y = caoc + tyh.x * card;
+    if(tyh.y > 0.0 && tyh.y < cy.caca )
+	{
+		*cy.normal = get_cylinder_normal(tyh.x, cy, ray);
+		return (tyh.x);
+	}
+    tyh.x = (((tyh.y < 0.0 ) ? 0.0 : cy.caca) - caoc) / card;
+	return (cy_cap(cy, poly, tyh));
+}
+
 double
 	check_cylinder_collision(t_shape shape, t_ray line)
 {
-	t_cylinder c;
-
-	c = shape.shape_data.cylinder;
-		return (cap_cylinder(c, line, solve_quadra(line.direction.x * line.direction.x + line.direction.y * line.direction.y + line.direction.z *
-	line.direction.z - (((c.orientation.x * line.direction.x + c.orientation.y * line.direction.y + c.orientation.z * line.direction.z) * (c.orientation.x *
-	line.direction.x + c.orientation.y * line.direction.y + c.orientation.z * line.direction.z)) / (c.orientation.x * c.orientation.x +
-	c.orientation.y * c.orientation.y + c.orientation.z * c.orientation.z)), 2 * ((line.origin.x - c.pos.x
-	) * line.direction.x + (line.origin.y - c.pos.y) * line.direction.y + (line.origin.z - c.pos.z) * line.direction.z) -
-	((2 * (c.orientation.x * (line.origin.x - c.pos.x) + c.orientation.y * (line.origin.y - c.pos.y) +
-	c.orientation.z * (line.origin.z - c.pos.z)) * (c.orientation.x * line.direction.x + c.orientation.y * line.direction.y +
-	c.orientation.z * line.direction.z)) / (c.orientation.x * c.orientation.x + c.orientation.y * c.orientation.y +
-	c.orientation.z * c.orientation.z)), (line.origin.x - c.pos.x) * (line.origin.x - c.pos.x) +
-	(line.origin.y - c.pos.y) * (line.origin.y - c.pos.y) + (line.origin.z - c.pos.z) *
-	(line.origin.z - c.pos.z) - (((c.orientation.x * (line.origin.x - c.pos.x) + c.orientation.y *
-	(line.origin.y - c.pos.y) + c.orientation.z * (line.origin.z - c.pos.z)) * (c.orientation.x *
-	(line.origin.x - c.pos.x) + c.orientation.y * (line.origin.y - c.pos.y) + c.orientation.z *
-	(line.origin.z - c.pos.z))) / (c.orientation.x * c.orientation.x + c.orientation.y * c.orientation.y +
-	c.orientation.z * c.orientation.z)) - c.radius * c.radius)));
-}
-*/
-
-double
-	check_cylinder_collision(t_shape shape, t_ray line)
-{
-	t_cylinder cy = shape.shape_data.cylinder;
-	t_v3double delta = v3f_sub(line.origin, cy.pos);
-	t_v3double ldot = v3f_sub(line.direction, v3f_multiply(cy.orientation, v3f_dot(line.direction, cy.orientation)));
-	t_v3double ddot = v3f_sub(delta, v3f_multiply(cy.orientation, v3f_dot(delta, cy.orientation)));
-	double a = v3f_square(ldot);
-	double b = 2.0f * v3f_dot(ldot, ddot);
-	double c = v3f_square(ddot) - square(cy.radius);
-	//return (solve_quadra(a, b, c));
-	return(cap_cylinder(cy, line, solve_quadra(a, b, c)));
+	t_cylinder cy;
+    t_v3double oc;
+    double card;
+	cy = shape.shape_data.cylinder;
+	oc = v3f_sub(line.origin, cy.capa);
+	card = v3f_dot(cy.ca, line.direction);
+	return(cy_col_2(cy, line, oc, card));
 }
