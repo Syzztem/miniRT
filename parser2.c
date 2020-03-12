@@ -6,11 +6,22 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 12:20:17 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 16:55:28 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:30:29 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
+
+int
+	skip_spaces(char *str)
+{
+	int i;
+
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	return (i);
+}
 
 t_v3double
 	get_v3f(char **str)

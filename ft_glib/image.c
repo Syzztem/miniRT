@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/10 15:53:13 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:54:52 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,7 @@
 static void
 	write_int(int nb, int fd)
 {
-	char	*out;
-	int		i;
-
-	i = -1;
-	out = (char *)&nb;
-	while (++i < 4)
-		write(fd, &out[i], 1);
-}
-
-size_t
-	f_strlen(const char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	write(fd, &nb, 4);
 }
 
 char
@@ -46,7 +29,7 @@ char
 	char *out;
 	char *str;
 
-	out = malloc(sizeof(char) * (f_strlen(filename) + 5));
+	out = malloc(sizeof(char) * (ft_strlen(filename) + 5));
 	str = out;
 	while (*filename)
 		*str++ = *filename++;
@@ -63,12 +46,26 @@ t_image
 {
 	t_image out;
 
-	if(!(out.img_ptr = mlx_new_image(mlx_ptr, res.x, res.y)))
+	if (!(out.img_ptr = mlx_new_image(mlx_ptr, res.x, res.y)))
 		exit(1);
 	out.res = res;
 	out.img_data = (int *)mlx_get_data_addr(out.img_ptr,
 		(int *)&out.bpp, &out.size_line, &out.endian);
 	return (out);
+}
+
+int
+	write_image_data(int fd, char *img_data, int line_size, int total_size)
+{
+	int		i;
+
+	i = total_size;
+	while (i > 0)
+	{
+		i -= line_size;
+		write(fd, img_data + i, line_size);
+	}
+	return (0);
 }
 
 int
@@ -78,7 +75,6 @@ int
 	int		total_size;
 	int		line_size;
 	char	*img_data;
-	int		i;
 
 	filename = add_extension(filename);
 	line_size = (image.res.x * image.bpp + 31) / 32 * 4;
@@ -95,11 +91,5 @@ int
 	write(fd, "\0\0\0\0\0", 5);
 	write_int(total_size, fd);
 	write(fd, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16);
-	i = total_size;
-	while (i > 0)
-	{
-		i -= line_size;
-		write(fd, img_data + i, line_size);
-	}
-	return (0);
+	return (write_image_data(fd, img_data, line_size, total_size));
 }

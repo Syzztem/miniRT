@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 11:23:14 by lothieve          #+#    #+#             */
-/*   Updated: 2019/11/15 14:41:23 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:20:43 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,6 @@ char
 		dup[i] = src[i];
 	dup[i] = '\0';
 	return (dup);
-}
-
-size_t
-	ft_strlen(const char *s)
-{
-	size_t i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }
 
 int

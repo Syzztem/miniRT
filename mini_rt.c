@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/10 15:52:53 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:20:24 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,16 @@ t_scene
 	if (scene.resolution.x > MAX_RES_X)
 		scene.resolution = (t_vector2){
 			.x = MAX_RES_X,
-			.y = (float)scene.resolution.y * ((float)MAX_RES_X / (float)scene.resolution.x) - 0.5f};
+			.y = (float)scene.resolution.y
+			* ((float)MAX_RES_X / (float)scene.resolution.x) - 0.5f};
 	if (scene.resolution.y > MAX_RES_Y)
 		scene.resolution = (t_vector2){
-			.x = (float)scene.resolution.x * ((float)MAX_RES_Y / (float)scene.resolution.y) - 0.5f,
-			.y = MAX_RES_Y};
-	if (scene.ambient_light.intensity == -1 || scene.resolution.x == -1 
-		|| !scene.camera || !scene.light_list || !scene.shape_list || g_error != 0)
-		yeet(scene, 1, "Error: invalid file\n");
+			.x = (float)scene.resolution.x * ((float)MAX_RES_Y /
+			(float)scene.resolution.y) - 0.5f, .y = MAX_RES_Y};
+	if (scene.ambient_light.intensity == -1 || scene.resolution.x == -1
+		|| !scene.camera || !scene.light_list || !scene.shape_list
+		|| g_error != 0)
+		yeet(scene, 1, "Error\n invalid file\n");
 	return (scene);
 }
 
@@ -127,11 +129,11 @@ int
 		else
 			filename = av[i];
 	}
-	if(ft_strncmp(filename + ft_strlen(filename) - 3, ".rt", 3))
-		return(ft_puts("Error\n Bad file extension.\n", -1));
+	if (ft_strncmp(filename + ft_strlen(filename) - 3, ".rt", 3))
+		return (ft_puts("Error\n Bad file extension.\n", -1));
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return(ft_puts("Error\n Couldn't open file.\n", -1));
+		return (ft_puts("Error\n Couldn't open file.\n", -1));
 	test_scene = get_scene_info(fd);
 	mini_rt(test_scene, savemode, filename);
 }

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 11:48:39 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/10 15:53:54 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:29:58 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,18 @@ double
 {
 	double		d;
 	t_v3double	op;
+	t_square	sq;
 
-	if (!isnan(d = plane_intersecton(new_plane(shape.shape_data.square
+	sq = shape.shape_data.square;
+	if (isnan(d = plane_intersecton(new_plane(shape.shape_data.square
 		.orientation, shape.shape_data.square.pos), line)))
-	{
-		op = v3f_sub(ray_point_at(line, d),
-			shape.shape_data.square.pos);
-		if (v3f_magnitude(op) < shape.shape_data.square.side)
-			return (d);
-	}
-	return (nan(""));
+		return (nan(""));
+	op = ray_point_at(line, d);
+	op = v3f_sub(op, sq.pos);
+	sq.side = sq.side / 2 - 0.001;
+	if (fabs(op.x) > sq.side || fabs(op.y) > sq.side || fabs(op.z) > sq.side)
+		return (nan(""));
+	return (d);
 }
 
 t_v3double

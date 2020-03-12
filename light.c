@@ -6,31 +6,32 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 14:24:37 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:11:08 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-int any_hit(t_ray light_ray, t_shape *shapes, double distance, t_sdist surface)
+int
+	any_hit(t_ray light_ray, t_shape *shapes, double distance, t_sdist surface)
 {
 	double dist;
 
-	(void) surface;
+	(void)surface;
 	while (shapes)
 	{
 		dist = shapes->calculate_fun.collision(*shapes, light_ray);
 		if (!isnan(dist) && dist > 0.01f && dist < distance - 0.01f)
 		{
-	//		if (!(surface.shape.type == CYLINDER && shapes->type == CYLINDER))
-				return (1);
+			return (1);
 		}
 		shapes = shapes->next;
 	}
 	return (0);
 }
 
-int blend_light(t_sdist surface, t_scene scene, t_ray cam_ray)
+int
+	blend_light(t_sdist surface, t_scene scene, t_ray cam_ray)
 {
 	t_v3double	normal;
 	t_v3double	hit_position;
@@ -41,20 +42,18 @@ int blend_light(t_sdist surface, t_scene scene, t_ray cam_ray)
 	hit_position = ray_point_at(cam_ray, surface.distance);
 	color = col_multiply_c(surface.shape.albedo,
 		col_multiply(scene.ambient_light.color, scene.ambient_light.intensity));
-	normal = surface.shape.calculate_normal(surface.distance, surface.shape, cam_ray);
+	normal = surface.shape.calculate_normal(surface.distance,
+		surface.shape, cam_ray);
 	while (scene.light_list)
 	{
 		v = v3f_sub(hit_position, scene.light_list->position);
 		light_ray = new_ray(scene.light_list->position, v);
 		if (!any_hit(light_ray, scene.shape_list, v3f_magnitude(v), surface))
-		{
-			color = col_add(col_multiply_c(surface.shape.albedo, 
+			color = col_add(col_multiply_c(surface.shape.albedo,
 				col_multiply(scene.light_list->color, fabs(v3f_dot(normal,
-					light_ray.direction)) * scene.light_list->intensity)), color);
-		}
+				light_ray.direction)) * scene.light_list->intensity)),
+				color);
 		scene.light_list = scene.light_list->next;
-//		if (surface.shape.type == CYLINDER)
-//			db_print_vector(normal);
 	}
 	return (get_color(color));
 }

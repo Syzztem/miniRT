@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:43:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 16:49:57 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:24:19 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,17 @@ unsigned char
 	sat_add(unsigned char a, unsigned char b)
 {
 	return (a + b > 255 ? 255 : a + b);
+}
+
+size_t
+	ft_strlen(const char *str)
+{
+	int i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

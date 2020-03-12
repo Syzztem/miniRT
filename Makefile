@@ -6,7 +6,7 @@
 #    By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/08 11:37:59 by lothieve          #+#    #+#              #
-#    Updated: 2020/02/02 16:24:44 by lothieve         ###   ########.fr        #
+#    Updated: 2020/03/12 17:19:24 by lothieve         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS = atoi.c ft_strncmp.c get_next_line.c get_next_line_utils.c mini_rt.c parse
 
 OBJS = ${SRCS:.c=.o}
 
-NAME = mini_rt
+NAME = miniRT
 
 CFLAGS = -Wall -Wextra -Werror -g
 

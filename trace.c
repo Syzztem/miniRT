@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/18 14:52:11 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:03:39 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int
 	closest_shape = tmin(scene.shape_list, ray);
 	if (closest_shape.distance == 0)
 		return (0);
-	return blend_light(closest_shape, scene, ray);
+	return (blend_light(closest_shape, scene, ray));
 }
 
 void

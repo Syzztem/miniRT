@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 13:13:45 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/10 15:33:52 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:16:56 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void
 int
 	ft_puts(const char *str, int ret)
 {
-	write(1, str, f_strlen(str));
+	write(1, str, ft_strlen(str));
 	return (ret);
 }
 

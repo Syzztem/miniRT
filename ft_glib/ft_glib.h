@@ -6,14 +6,14 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 15:04:59 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:15:51 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_GLIB_H
 # define FT_GLIB_H
 # define DEG_TO_RAD 0.01745329251
-# define EPSILON 0.0001L
+# define EPSILON 0.0001
 # include <mlx.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -137,7 +137,7 @@ t_matrix		initialize_matrix();
 t_plane			new_plane(t_v3double normal, t_v3double p);
 t_v3double		v3f_rotate(t_v3double in, t_v3double axe, double s, double c);
 t_image			generate_image(t_vector2 res, void *mlx_ptr);
-size_t			f_strlen(const char *str);
+size_t			ft_strlen(const char *str);
 unsigned char	sat_add(unsigned char a, unsigned char b);
 int				create_bitmap(t_image image, char *filename);
 void			*ft_memcpy(void *dst, const void *src, size_t n);

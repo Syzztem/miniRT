@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/10 15:34:10 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:31:07 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int				ft_strilen(const char *str);
 int				flen(char *str);
 int				blend_light(t_sdist surface, t_scene scene, t_ray cam_ray);
 int				ft_puts(const char *str, int ret);
+int				skip_spaces(char *str);
 t_color			ft_atoc(const char *str);
 double			ft_atof(const char *str);
 t_v3double		get_v3f(char **str);

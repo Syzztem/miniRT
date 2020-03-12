@@ -6,32 +6,11 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 16:38:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 15:06:18 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:14:15 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-t_light
-	*get_light(char *line)
-{
-	t_light *out;
-
-	line++;
-	while (ft_isspace(*line))
-		line++;
-	out = malloc(sizeof(t_light));
-	out->position = get_v3f(&line);
-	while (ft_isspace(*line))
-		line++;
-	out->intensity = ft_atof(line);
-	line += flen(line);
-	while (ft_isspace(*line))
-		line++;
-	out->color = ft_atoc(line);
-	out->next = NULL;
-	return (out);
-}
 
 t_shape
 	*get_square(char *line)
@@ -79,23 +58,18 @@ t_shape
 	t_shape *out;
 
 	line += 2;
-	while (ft_isspace(*line))
-		line++;
+	line += skip_spaces(line);
 	out = malloc(sizeof(t_shape));
 	out->shape_data.cylinder.pos = get_v3f(&line);
-	while (ft_isspace(*line))
-		line++;
+	line += skip_spaces(line);
 	out->shape_data.cylinder.orientation = v3f_normalize(get_v3f(&line));
-	while (ft_isspace(*line))
-		line++;
+	line += skip_spaces(line);
 	out->shape_data.cylinder.radius = ft_atof(line) / 2.0f;
 	line += flen(line);
-	while (ft_isspace(*line))
-		line++;
+	line += skip_spaces(line);
 	out->shape_data.cylinder.height = ft_atof(line) / 2.0f;
 	line += flen(line);
-	while (ft_isspace(*line))
-		line++;
+	line += skip_spaces(line);
 	out->albedo = ft_atoc(line);
 	out->calculate_fun.collision = check_cylinder_collision;
 	out->calculate_normal = calculate_cylinder_normal;
