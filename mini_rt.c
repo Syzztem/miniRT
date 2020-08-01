@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/12 17:20:24 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/07/25 14:13:18 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ int
 			filename = av[i];
 	}
 	if (ft_strncmp(filename + ft_strlen(filename) - 3, ".rt", 3))
-		return (ft_puts("Error\n Bad file extension.\n", -1));
+		return (ft_puts("Error\nBad file extension.\n", -1));
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (ft_puts("Error\n Couldn't open file.\n", -1));
+		return (ft_puts("Error\nCouldn't open file.\n", -1));
 	test_scene = get_scene_info(fd);
 	mini_rt(test_scene, savemode, filename);
 }

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/12 10:31:07 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/05/21 13:44:34 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINI_RT_H
 # include "ft_glib/ft_glib.h"
 # include <libgen.h>
-# include <stdio.h>
 # define MAX_RES_X 2560
 # define MAX_RES_Y 1440
 

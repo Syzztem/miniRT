@@ -6,11 +6,11 @@
 #    By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/08 11:37:59 by lothieve          #+#    #+#              #
-#    Updated: 2020/03/12 17:19:24 by lothieve         ###   ########.fr        #
+#    Updated: 2020/05/18 10:46:44 by lothieve         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = atoi.c ft_strncmp.c get_next_line.c get_next_line_utils.c mini_rt.c parser.c parser2.c sphere.c ft_glib/color_functions.c ft_glib/v3f_operations.c ft_glib/v3f_values.c ft_glib/basic_calc.c ft_glib/ray_functions.c light.c ft_glib/matrix.c plane.c ft_glib/image.c ft_glib/ft_memcpy.c ft_glib/color_functions2.c ft_glib/v3f_operations2.c key_functions.c create_elems.c square.c cylinder.c exit.c db_functions.c trace.c create_elems2.c create_elems3.c triangle.c
+SRCS = atoi.c ft_strncmp.c get_next_line.c get_next_line_utils.c mini_rt.c parser.c parser2.c sphere.c ft_glib/color_functions.c ft_glib/v3f_operations.c ft_glib/v3f_values.c ft_glib/basic_calc.c ft_glib/ray_functions.c light.c ft_glib/matrix.c plane.c ft_glib/image.c ft_glib/ft_memcpy.c ft_glib/color_functions2.c ft_glib/v3f_operations2.c key_functions.c create_elems.c square.c cylinder.c exit.c trace.c create_elems2.c create_elems3.c triangle.c
 
 OBJS = ${SRCS:.c=.o}
 

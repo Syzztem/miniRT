@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 17:03:39 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:04:15 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,6 @@ int
 	if (closest_shape.distance == 0)
 		return (0);
 	return (blend_light(closest_shape, scene, ray));
-}
-
-void
-	image_pixel_put(t_image image, int x, int y, int color)
-{
-	image.img_data[x + y * image.size_line / sizeof(int)] = color;
 }
 
 t_image

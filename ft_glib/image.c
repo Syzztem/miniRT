@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/12 10:54:52 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:04:24 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static void
-	write_int(int nb, int fd)
+void
+	image_pixel_put(t_image image, int x, int y, int color)
 {
-	write(fd, &nb, 4);
+	image.img_data[x + y * image.size_line / sizeof(int)] = color;
 }
 
 char
@@ -82,14 +82,14 @@ int
 	fd = open(filename, O_WRONLY | O_CREAT, S_IRWXU | S_IRGRP | S_IROTH);
 	img_data = (char *)(image.img_data);
 	write(fd, "BM", 2);
-	write_int(total_size + 54, fd);
+	write(fd, (&total_size + 54), 4);
 	write(fd, "\0\0\0\0\x36\0\0\0\x28\0\0\0", 12);
-	write_int(image.res.x, fd);
-	write_int(image.res.y, fd);
+	write(fd, &image.res.x, 4);
+	write(fd, &image.res.y, 4);
 	write(fd, "\1\0", 2);
 	write(fd, &image.bpp, 1);
 	write(fd, "\0\0\0\0\0", 5);
-	write_int(total_size, fd);
+	write(fd, &total_size, 4);
 	write(fd, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16);
 	return (write_image_data(fd, img_data, line_size, total_size));
 }

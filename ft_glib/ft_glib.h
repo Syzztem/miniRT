@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 17:15:51 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:04:55 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,6 @@ size_t			ft_strlen(const char *str);
 unsigned char	sat_add(unsigned char a, unsigned char b);
 int				create_bitmap(t_image image, char *filename);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			image_pixel_put(t_image image, int x, int y, int color);
 
 #endif
