@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 16:38:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/12 16:14:15 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 16:16:53 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void
 			elem = elem->next;
 		elem->next = get_square(line);
 	}
+	elem->material = NULL;
 }
 
 void

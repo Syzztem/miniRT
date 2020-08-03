@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:43:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/12 10:24:19 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/02 16:59:45 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,10 @@ size_t
 	while (str[i])
 		i++;
 	return (i);
+}
+
+float
+	randfloat()
+{
+	return ((float)rand() / (float)(RAND_MAX)) * 2 - 1;
 }

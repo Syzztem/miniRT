@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/05/21 13:44:34 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 16:14:10 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <libgen.h>
 # define MAX_RES_X 2560
 # define MAX_RES_Y 1440
+# ifdef BONUS
+#  define AALVL 50
+#endif
 
 struct s_shape;
 
@@ -84,6 +87,7 @@ typedef struct	s_shape
 	t_shapes		shape_data;
 	t_func_types	calculate_fun;
 	t_v3double		(*calculate_normal) (double t, struct s_shape s, t_ray ray);
+	t_mat			material;
 }				t_shape;
 
 typedef struct	s_sdist

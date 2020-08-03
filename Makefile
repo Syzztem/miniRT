@@ -6,7 +6,7 @@
 #    By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/08 11:37:59 by lothieve          #+#    #+#              #
-#    Updated: 2020/05/18 10:46:44 by lothieve         ###   ########.fr        #
+#    Updated: 2020/08/02 17:03:55 by lothieve         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS = ${SRCS:.c=.o}
 
 NAME = miniRT
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -DBONUS
 
 LFLAGS = -lmlx -framework OpenGL -framework AppKit -g 
 

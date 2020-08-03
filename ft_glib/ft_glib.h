@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/01 12:04:55 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 16:12:18 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef struct	s_vector2
 
 typedef struct	s_color
 {
-	unsigned char r;
-	unsigned char g;
 	unsigned char b;
+	unsigned char g;
+	unsigned char r;
+	unsigned char a;
 }				t_color;
 
 typedef struct	s_v3double
@@ -107,10 +108,12 @@ typedef struct	s_image
 	int			endian;
 }				t_image;
 
+typedef int		(*t_mat)(t_ray ray, void *param);
 double			square(double f);
 double			v3f_dist_lp(t_ray line, t_v3double point);
 int				get_color(t_color color);
 int				get_color_i(int r, int g, int b);
+int				median_color(int *levels, int size);
 double			v3f_magnitude(t_v3double v);
 double			v3f_dot(t_v3double u, t_v3double v);
 double			v3f_square(t_v3double v);
@@ -133,6 +136,8 @@ t_color			new_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			col_multiply(t_color color, double value);
 t_color			col_add(t_color a, t_color b);
 t_color			col_multiply_c(t_color a, t_color b);
+t_color			col_merge(t_color a, t_color b);
+t_color			new_color_i(int color);
 t_matrix		initialize_matrix();
 t_plane			new_plane(t_v3double normal, t_v3double p);
 t_v3double		v3f_rotate(t_v3double in, t_v3double axe, double s, double c);
@@ -142,5 +147,6 @@ unsigned char	sat_add(unsigned char a, unsigned char b);
 int				create_bitmap(t_image image, char *filename);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			image_pixel_put(t_image image, int x, int y, int color);
+float			randfloat();
 
 #endif

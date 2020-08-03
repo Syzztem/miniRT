@@ -6,12 +6,26 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/05/21 13:41:11 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/02 16:06:49 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 #include <stdio.h>
+
+void
+	next_view(t_scene *scene)
+{
+	scene->camera = scene->camera->next;
+	if (!scene->camera->render.img_data)
+	{
+		scene->camera->render =
+			generate_image(scene->resolution, scene->mlx_pointer);
+		trace(*scene, scene->camera->render);
+	}
+	mlx_put_image_to_window(scene->mlx_pointer,
+		scene->window_pointer, scene->camera->render.img_ptr, 0, 0);
+}
 
 int	k_hook(int keycode, void *param)
 {

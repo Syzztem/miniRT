@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:08:50 by lothieve          #+#    #+#             */
-/*   Updated: 2020/01/11 12:15:49 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/02 16:38:29 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,8 @@ int
 int
 	get_color(t_color color)
 {
-	int out;
-
-	out = 0;
-	out += color.r;
-	out = out << 8;
-	out += color.g;
-	out = out << 8;
-	out += color.b;
-	return (out);
+	color.a = 0;
+	return (*(int *)(&color));
 }
 
 t_color

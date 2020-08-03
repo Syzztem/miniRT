@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/01 12:04:15 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 16:08:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,56 @@ int
 	return (blend_light(closest_shape, scene, ray));
 }
 
+#ifdef AALVL
+
+#include <stdio.h>
+static int
+	shoot_ray(t_scene scene, int i, int j, int dist_to_screen)
+{
+	t_ray r;
+	int aa;
+	float randx;
+	float randy;
+	int levels[AALVL];
+
+	aa = -1;
+	while (++aa < AALVL)
+	{
+		randx = randfloat();
+		randy = randfloat();
+		r = ray_from_points(scene.camera->pos,
+			new_v3f(-i + scene.resolution.x / 2 + randx / 2,
+			j - scene.resolution.y / 2 + randy / 2, -dist_to_screen));
+		r.direction = v3f_rotate(r.direction, scene.camera->rot_data.axe,
+			scene.camera->rot_data.r_sin, scene.camera->rot_data.r_cos);
+		levels[aa] = calculate_color(r, scene);
+	}
+	return (median_color(levels, AALVL));
+}
+
+#else
+
+static int
+	shoot_ray(t_scene scene, int i, int j, int dist_to_screen)
+{
+	t_ray r;
+
+	r = ray_from_points(scene.camera->pos,
+		new_v3f(-i + scene.resolution.x / 2,
+		j - scene.resolution.y / 2, -dist_to_screen));
+	r.direction = v3f_rotate(r.direction, scene.camera->rot_data.axe,
+		scene.camera->rot_data.r_sin, scene.camera->rot_data.r_cos);
+	return (calculate_color(r, scene));
+}
+
+#endif
+
 t_image
 	trace(t_scene scene, t_image image)
 {
 	int		i;
 	int		j;
 	double	dist_to_screen;
-	t_ray	r;
 
 	dist_to_screen = scene.resolution.x /
 		(2 * tanf(DEG_TO_RAD * scene.camera->fov / 2));
@@ -57,30 +100,12 @@ t_image
 		j = 0;
 		while (j < scene.resolution.y)
 		{
-			r = ray_from_points(scene.camera->pos,
-				new_v3f(-i + scene.resolution.x / 2,
-				j - scene.resolution.y / 2, -dist_to_screen));
-			r.direction = v3f_rotate(r.direction, scene.camera->rot_data.axe,
-				scene.camera->rot_data.r_sin, scene.camera->rot_data.r_cos);
-			image_pixel_put(image, i, j, calculate_color(r, scene));
+			image_pixel_put(image, i, j,
+				shoot_ray(scene, i, j, dist_to_screen));
 			j++;
 		}
 		i++;
 	}
 	scene.camera->render = image;
 	return (image);
-}
-
-void
-	next_view(t_scene *scene)
-{
-	scene->camera = scene->camera->next;
-	if (!scene->camera->render.img_data)
-	{
-		scene->camera->render =
-			generate_image(scene->resolution, scene->mlx_pointer);
-		trace(*scene, scene->camera->render);
-	}
-	mlx_put_image_to_window(scene->mlx_pointer,
-		scene->window_pointer, scene->camera->render.img_ptr, 0, 0);
 }
