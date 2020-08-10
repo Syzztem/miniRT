@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:56:50 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 16:17:33 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 18:31:44 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_cam
 	elem->fov = ft_atoi(line);
 	calculate_rotation_data(elem);
 	elem->next = NULL;
-	elem->render.img_data = NULL;
+	elem->render = NULL;
 	return (elem);
 }
 
@@ -83,7 +83,6 @@ void
 			elem = elem->next;
 		elem->next = get_plane(line);
 	}
-	elem->material = NULL;
 }
 
 void

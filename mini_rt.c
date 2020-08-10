@@ -6,12 +6,11 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 14:49:05 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:51:59 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-#include "get_next_line.h"
 
 void
 	finish_cam_list(t_cam *cam_list)
@@ -80,7 +79,7 @@ t_scene
 	if (scene.ambient_light.intensity == -1 || scene.resolution.x == -1
 		|| !scene.camera || !scene.light_list || !scene.shape_list
 		|| g_error != 0)
-		yeet(scene, 1, "Error\n invalid file\n");
+		yeet(scene, 1, "Error\ninvalid file\n");
 	return (scene);
 }
 
@@ -92,19 +91,20 @@ void
 
 	mlx_ptr = mlx_init();
 	trace(scene, generate_image(scene.resolution, mlx_ptr));
+	//filter_sepia(scene.camera->render);
 	if (!savemode)
 	{
 		window = mlx_new_window(mlx_ptr, scene.resolution.x,
 			scene.resolution.y, filename);
 		mlx_put_image_to_window(mlx_ptr, window,
-			scene.camera->render.img_ptr, 0, 0);
+			scene.camera->render->img_ptr, 0, 0);
 		mlx_key_hook(window, k_hook, &scene);
 		mlx_hook(window, 17, 0, xyeet, &scene);
 		scene.mlx_pointer = mlx_ptr;
 		scene.window_pointer = window;
 		mlx_loop(mlx_ptr);
 	}
-	create_bitmap(scene.camera->render, filename);
+	create_bitmap(*scene.camera->render, filename);
 	yeet(scene, 0, NULL);
 }
 

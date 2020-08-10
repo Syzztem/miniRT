@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 16:38:48 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 16:16:53 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:52:58 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_cylinder
 	cyr = new_ray(cy.pos, cy.orientation);
 	cy.capa = ray_point_at(cyr, cy.height);
 	cy.capb = ray_point_at(cyr, -cy.height);
-	cy.normal = malloc(sizeof(t_v3double));
 	cy.ca = v3f_sub(cy.capb, cy.capa);
 	cy.caca = v3f_dot(cy.ca, cy.ca);
 	return (cy);
@@ -92,7 +91,6 @@ void
 			elem = elem->next;
 		elem->next = get_square(line);
 	}
-	elem->material = NULL;
 }
 
 void

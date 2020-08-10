@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 16:12:18 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:52:19 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_GLIB_H
 # define DEG_TO_RAD 0.01745329251
 # define EPSILON 0.0001
+#include "get_next_line.h"
 # include <mlx.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -78,6 +79,7 @@ typedef struct	s_sphere
 	double		radius;
 }				t_sphere;
 
+
 typedef struct	s_cylinder
 {
 	t_v3double	pos;
@@ -85,7 +87,6 @@ typedef struct	s_cylinder
 	t_v3double	capa;
 	t_v3double	capb;
 	t_v3double	ca;
-	t_v3double	*normal;
 	double		caca;
 	double		radius;
 	double		height;
@@ -108,7 +109,14 @@ typedef struct	s_image
 	int			endian;
 }				t_image;
 
-typedef int		(*t_mat)(t_ray ray, void *param);
+typedef struct	s_mesh
+{
+	t_v3double	*vertices;
+	t_v3double	*triangles;
+}				t_mesh;
+
+typedef t_image	*(t_filter)(t_image *image);
+//typedef int		(t_mat)(t_ray ray, void *param);
 double			square(double f);
 double			v3f_dist_lp(t_ray line, t_v3double point);
 int				get_color(t_color color);
@@ -118,6 +126,7 @@ double			v3f_magnitude(t_v3double v);
 double			v3f_dot(t_v3double u, t_v3double v);
 double			v3f_square(t_v3double v);
 double			solve_quadra(double a, double b, double c);
+double			ft_atof(const char *str);
 t_v3double		new_v3f(double x, double y, double z);
 t_v3double		to_v3f(t_vector3 v);
 t_v3double		v3f_cross(t_v3double u, t_v3double v);
@@ -141,12 +150,15 @@ t_color			new_color_i(int color);
 t_matrix		initialize_matrix();
 t_plane			new_plane(t_v3double normal, t_v3double p);
 t_v3double		v3f_rotate(t_v3double in, t_v3double axe, double s, double c);
-t_image			generate_image(t_vector2 res, void *mlx_ptr);
+t_image			*generate_image(t_vector2 res, void *mlx_ptr);
+t_image			*filter_bw(t_image *image);
+t_image			*filter_sepia(t_image *image);
+t_image			*filter_inv(t_image *image);
 size_t			ft_strlen(const char *str);
 unsigned char	sat_add(unsigned char a, unsigned char b);
 int				create_bitmap(t_image image, char *filename);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
-void			image_pixel_put(t_image image, int x, int y, int color);
+void			image_pixel_put(t_image *image, int x, int y, int color);
 float			randfloat();
 
 #endif

@@ -6,44 +6,14 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 16:08:13 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/04 19:40:49 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_sdist
-	tmin(t_shape *shape_list, t_ray ray)
-{
-	t_sdist	sdist;
-	double	t;
-
-	sdist.distance = 0;
-	while (shape_list)
-	{
-		t = shape_list->calculate_fun.collision(*shape_list, ray);
-		if ((sdist.distance == 0 || sdist.distance > t)
-			&& !isnan(t) && t > EPSILON)
-			sdist = (t_sdist) {.shape = *shape_list, .distance = t};
-		shape_list = shape_list->next;
-	}
-	return (sdist);
-}
-
-int
-	calculate_color(t_ray ray, t_scene scene)
-{
-	t_sdist		closest_shape;
-
-	closest_shape = tmin(scene.shape_list, ray);
-	if (closest_shape.distance == 0)
-		return (0);
-	return (blend_light(closest_shape, scene, ray));
-}
-
 #ifdef AALVL
 
-#include <stdio.h>
 static int
 	shoot_ray(t_scene scene, int i, int j, int dist_to_screen)
 {
@@ -85,8 +55,77 @@ static int
 
 #endif
 
+#ifdef THREADX
+
+#include <stdio.h>
+void
+	*run_thread(void *param)
+{
+	t_thread_food	*food;
+	int				i;
+	int				j;
+	double			dist_to_screen;
+
+	food = param;
+	i = food->tl.x;
+	dist_to_screen = food->scene.resolution.x /
+		(2 * tanf(DEG_TO_RAD * food->scene.camera->fov / 2));
+	while (i < food->br.x)
+	{
+		j = food->tl.y;
+		while (j < food->br.y)
+		{
+			image_pixel_put(food->image, i, j,
+				shoot_ray(food->scene, i, j, dist_to_screen));
+			j++;
+		}
+		i++;
+	}
+	free (param);
+	return (NULL);
+}
+
 t_image
-	trace(t_scene scene, t_image image)
+	*trace(t_scene scene, t_image *image)
+{
+	pthread_t		*threads;
+	unsigned int	i;
+	unsigned int	count;
+	t_thread_food	*param;
+	t_vector2		size;
+
+	count = THREADX * THREADY;
+	threads = malloc(sizeof(pthread_t) * count);
+	size.x = scene.resolution.x / THREADX;
+	size.y = scene.resolution.y / THREADY;
+	i = 0;
+	while (i < count)
+	{
+		param = malloc (sizeof(t_thread_food));
+		param->image = image;
+		param->scene = scene;
+		param->tl.x = size.x * (i % THREADX);
+		param->tl.y = size.y * (i / THREADX);
+		param->br.x = size.x * (i % THREADX + 1);
+		param->br.y = size.y * (i / THREADX + 1);
+		pthread_create(&threads[i], NULL, run_thread, param);
+		i++;
+	}
+	i = 0;
+	while (i < count)
+	{
+		pthread_join(threads[i], NULL);
+		printf("%d\n", i);
+		i++;
+	}
+	scene.camera->render = image;
+	return (image);
+}
+
+#else
+
+t_image
+	*trace(t_scene scene, t_image *image)
 {
 	int		i;
 	int		j;
@@ -109,3 +148,5 @@ t_image
 	scene.camera->render = image;
 	return (image);
 }
+
+#endif

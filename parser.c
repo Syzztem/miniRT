@@ -6,24 +6,11 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:05:55 by lothieve          #+#    #+#             */
-/*   Updated: 2020/02/17 16:39:05 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:34:55 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-int
-	ft_isspace(int c)
-{
-	if (c == '\t'
-			|| c == '\n'
-			|| c == '\v'
-			|| c == '\f'
-			|| c == '\r'
-			|| c == ' ')
-		return (1);
-	return (0);
-}
 
 t_vector2
 	get_res(char *line)

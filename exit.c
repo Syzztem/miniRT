@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 13:13:45 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 17:16:56 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:54:33 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void
 	while (current)
 	{
 		next = current->next;
-		if (current->render.img_data)
-			mlx_destroy_image(mlx_ptr, current->render.img_ptr);
+		if (current->render->img_data)
+			mlx_destroy_image(mlx_ptr, current->render->img_ptr);
 		free(current);
 		current = next;
 	}
@@ -46,8 +46,6 @@ void
 	while (current)
 	{
 		next = current->next;
-		if (current->type == CYLINDER)
-			free(current->shape_data.cylinder.normal);
 		free(current);
 		current = next;
 	}
@@ -80,9 +78,6 @@ int
 void
 	yeet(t_scene scene, int ret, char *error_str)
 {
-	free_cam_list(scene.camera, scene.mlx_pointer);
-	free_shape_list(scene.shape_list);
-	free_light_list(scene.light_list);
 	if (ret == 0)
 		mlx_destroy_window(scene.mlx_pointer, scene.window_pointer);
 	if (error_str)

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/03/11 17:11:08 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/04 16:08:16 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,33 @@ t_light
 	return ((t_light) {.position = position,
 		.intensity = intensity, .color = color});
 }
+
+t_sdist
+	tmin(t_shape *shape_list, t_ray ray)
+{
+	t_sdist	sdist;
+	double	t;
+
+	sdist.distance = 0;
+	while (shape_list)
+	{
+		t = shape_list->calculate_fun.collision(*shape_list, ray);
+		if ((sdist.distance == 0 || sdist.distance > t)
+			&& !isnan(t) && t > EPSILON)
+			sdist = (t_sdist) {.shape = *shape_list, .distance = t};
+		shape_list = shape_list->next;
+	}
+	return (sdist);
+}
+
+int
+	calculate_color(t_ray ray, t_scene scene)
+{
+	t_sdist		closest_shape;
+
+	closest_shape = tmin(scene.shape_list, ray);
+	if (closest_shape.distance == 0)
+		return (0);
+	return (blend_light(closest_shape, scene, ray));
+}
+

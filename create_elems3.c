@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:57:36 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 16:18:05 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 16:27:43 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void
 			elem = elem->next;
 		elem->next = get_triangle(line);
 	}
-	elem->material = NULL;
 }
 
 void
@@ -115,5 +114,4 @@ void
 			elem = elem->next;
 		elem->next = get_sphere(line);
 	}
-	elem->material = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:18 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 16:14:10 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/04 19:46:13 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # define MAX_RES_Y 1440
 # ifdef BONUS
 #  define AALVL 50
-#endif
+#  define THREADX 5
+#  define THREADY 5
+#  include <pthread.h>
+# endif
 
 struct s_shape;
 
@@ -55,7 +58,7 @@ typedef struct	s_cam
 	t_v3double		rot;
 	int				fov;
 	t_rot_data		rot_data;
-	t_image			render;
+	t_image			*render;
 	struct s_cam	*next;
 }				t_cam;
 
@@ -87,7 +90,6 @@ typedef struct	s_shape
 	t_shapes		shape_data;
 	t_func_types	calculate_fun;
 	t_v3double		(*calculate_normal) (double t, struct s_shape s, t_ray ray);
-	t_mat			material;
 }				t_shape;
 
 typedef struct	s_sdist
@@ -107,6 +109,14 @@ typedef struct	s_scene
 	void		*window_pointer;
 }				t_scene;
 
+typedef struct	s_thread_food
+{
+	t_scene		scene;
+	t_image		*image;
+	t_vector2	tl;
+	t_vector2	br;
+}				t_thread_food;
+
 int				ft_atoi(const char *str);
 double			ft_atof(const char *str);
 int				ft_isspace(int c);
@@ -116,6 +126,7 @@ int				flen(char *str);
 int				blend_light(t_sdist surface, t_scene scene, t_ray cam_ray);
 int				ft_puts(const char *str, int ret);
 int				skip_spaces(char *str);
+int				calculate_color(t_ray ray, t_scene scene);
 t_color			ft_atoc(const char *str);
 double			ft_atof(const char *str);
 t_v3double		get_v3f(char **str);
@@ -142,7 +153,7 @@ double			check_plane_collisons(t_shape shape, t_ray line);
 double			plane_intersecton(t_plane plane, t_ray line);
 t_light			new_light(t_v3double position, double intensity, t_color color);
 t_light			*get_light(char *line);
-t_image			trace(t_scene scene, t_image image);
+t_image			*trace(t_scene scene, t_image *image);
 double			ft_fminpos(double a, double b);
 void			calculate_rotation_data(t_cam *cam);
 int				k_hook(int keycode, void *param);

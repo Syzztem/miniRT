@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 10:42:42 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/01 12:04:24 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/03 18:26:29 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 #include <unistd.h>
 
 void
-	image_pixel_put(t_image image, int x, int y, int color)
+	image_pixel_put(t_image *image, int x, int y, int color)
 {
-	image.img_data[x + y * image.size_line / sizeof(int)] = color;
+	image->img_data[x + y * image->size_line / sizeof(int)] = color;
 }
 
 char
@@ -42,15 +42,16 @@ char
 }
 
 t_image
-	generate_image(t_vector2 res, void *mlx_ptr)
+	*generate_image(t_vector2 res, void *mlx_ptr)
 {
-	t_image out;
+	t_image *out;
 
-	if (!(out.img_ptr = mlx_new_image(mlx_ptr, res.x, res.y)))
+	out = malloc(sizeof(t_image));
+	if (!(out->img_ptr = mlx_new_image(mlx_ptr, res.x, res.y)))
 		exit(1);
-	out.res = res;
-	out.img_data = (int *)mlx_get_data_addr(out.img_ptr,
-		(int *)&out.bpp, &out.size_line, &out.endian);
+	out->res = res;
+	out->img_data = (int *)mlx_get_data_addr(out->img_ptr,
+		(int *)&out->bpp, &out->size_line, &out->endian);
 	return (out);
 }
 
