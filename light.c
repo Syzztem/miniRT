@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:05:09 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/04 16:08:16 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/13 14:15:46 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,3 @@ int
 		return (0);
 	return (blend_light(closest_shape, scene, ray));
 }
-

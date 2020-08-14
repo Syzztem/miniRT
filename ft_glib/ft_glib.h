@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/07 14:52:19 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/13 14:32:04 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_GLIB_H
 # define DEG_TO_RAD 0.01745329251
 # define EPSILON 0.0001
-#include "get_next_line.h"
+# include "get_next_line.h"
 # include <mlx.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -79,7 +79,6 @@ typedef struct	s_sphere
 	double		radius;
 }				t_sphere;
 
-
 typedef struct	s_cylinder
 {
 	t_v3double	pos;
@@ -116,7 +115,6 @@ typedef struct	s_mesh
 }				t_mesh;
 
 typedef t_image	*(t_filter)(t_image *image);
-//typedef int		(t_mat)(t_ray ray, void *param);
 double			square(double f);
 double			v3f_dist_lp(t_ray line, t_v3double point);
 int				get_color(t_color color);

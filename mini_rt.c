@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/07 14:51:59 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/13 14:35:05 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void
 
 	mlx_ptr = mlx_init();
 	trace(scene, generate_image(scene.resolution, mlx_ptr));
-	//filter_sepia(scene.camera->render);
 	if (!savemode)
 	{
 		window = mlx_new_window(mlx_ptr, scene.resolution.x,

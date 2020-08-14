@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 12:06:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/03 14:28:00 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/13 14:10:23 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_color
 int
 	median_color(int *levels, int size)
 {
-	(void)size;
 	t_color	*colors;
 	t_color	out;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:43:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/02 16:59:45 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/13 14:13:30 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,6 @@ double
 }
 
 double
-	solve_quadra(double a, double b, double c)
-{
-	double delta;
-
-	delta = sqrtf(b * b - 4 * a * c);
-	if (isnan(delta))
-		return (delta);
-	b /= 2 * a;
-	return (ft_fminpos(-b - delta, delta - b));
-}
-
-double
 	square(double f)
 {
 	return (f * f);
@@ -75,7 +63,7 @@ size_t
 }
 
 float
-	randfloat()
+	randfloat(void)
 {
 	return ((float)rand() / (float)(RAND_MAX)) * 2 - 1;
 }

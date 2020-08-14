@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:03:00 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/04 19:40:49 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/08/14 14:08:11 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 static int
 	shoot_ray(t_scene scene, int i, int j, int dist_to_screen)
 {
-	t_ray r;
-	int aa;
-	float randx;
-	float randy;
-	int levels[AALVL];
+	t_ray	r;
+	int		aa;
+	float	randx;
+	float	randy;
+	int		levels[AALVL];
 
 	aa = -1;
 	while (++aa < AALVL)
@@ -57,7 +57,6 @@ static int
 
 #ifdef THREADX
 
-#include <stdio.h>
 void
 	*run_thread(void *param)
 {
@@ -81,7 +80,7 @@ void
 		}
 		i++;
 	}
-	free (param);
+	free(param);
 	return (NULL);
 }
 
@@ -98,26 +97,19 @@ t_image
 	threads = malloc(sizeof(pthread_t) * count);
 	size.x = scene.resolution.x / THREADX;
 	size.y = scene.resolution.y / THREADY;
-	i = 0;
-	while (i < count)
+	i = -1;
+	while (++i < count && (param = malloc(sizeof(t_thread_food))))
 	{
-		param = malloc (sizeof(t_thread_food));
-		param->image = image;
-		param->scene = scene;
-		param->tl.x = size.x * (i % THREADX);
-		param->tl.y = size.y * (i / THREADX);
-		param->br.x = size.x * (i % THREADX + 1);
-		param->br.y = size.y * (i / THREADX + 1);
+		*param = (t_thread_food) {.image = image, .scene = scene,
+		.tl = (t_vector2) {.x = size.x * (i % THREADX), .y = param->tl.y =
+		size.y * (i / THREADX)}, .br = (t_vector2) {.x = size.x *
+		(i % THREADX + 1), .y = size.y * (i / THREADX + 1)}};
 		pthread_create(&threads[i], NULL, run_thread, param);
-		i++;
 	}
-	i = 0;
-	while (i < count)
-	{
+	i = -1;
+	while (++i < count)
 		pthread_join(threads[i], NULL);
-		printf("%d\n", i);
-		i++;
-	}
+	free(threads);
 	scene.camera->render = image;
 	return (image);
 }
