@@ -1,6 +1,6 @@
 *.o
 */*.o
 **/*.o
-mini_rt
+miniRT
 img_tests/*
 *.bmp
