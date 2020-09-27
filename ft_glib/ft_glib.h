@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/13 14:32:04 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/09/27 18:32:23 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdlib.h>
-# include <CoreGraphics/CGDisplayConfiguration.h>
 
 typedef double **t_matrix;
 
