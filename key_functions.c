@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/09/29 16:36:51 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:57:06 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void
 	if (!filtered)
 		filtered = generate_image(scene->resolution, scene->mlx_pointer);
 	ft_memcpy(filtered->img_data, image->img_data,
-		scene->resolution.x * scene->resolution.y * 4);
+		scene->resolution.x * scene->resolution.y * sizeof(int));
 	if (filter)
 		filter(filtered);
 	mlx_put_image_to_window(scene->mlx_pointer,
