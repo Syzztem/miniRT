@@ -15,7 +15,7 @@
 # define DEG_TO_RAD 0.01745329251
 # define EPSILON 0.0001
 # include "get_next_line.h"
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
