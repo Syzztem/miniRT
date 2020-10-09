@@ -32,14 +32,14 @@ INCLUDE		= -L. minilibx-linux/libmlx.a -lXext -lX11 -lm -lbsd -lpthread
 MLX		= ./minilibx-linux
 
 .c.o:
-		@$(COMMAND) -w $(CFLAGS) ${INCLUDE} -c $< -o ${<:.c=.o} ${LIB}
+		$(COMMAND) -w $(CFLAGS) ${INCLUDE} -c $< -o ${<:.c=.o} ${LIB}
 
 minilibx:
-		@$(MAKE) -C ./minilibx-linux
+		$(MAKE) -C ./minilibx-linux
 
 
 ${NAME}:	${OBJS} minilibx
-		@${COMMAND} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} ${LIB}
+		${COMMAND} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} ${LIB}
 
 all: ${NAME}
 
@@ -51,9 +51,9 @@ clean:
 		@${RM} ${OBJS}
 
 fclean:		clean
-		@$(MAKE) -C ./minilibx-linux/. clean
-		@${RM} ${NAME}
-		@${RM} ./minilibx-linux/libmlx.a
+		$(MAKE) -C ./minilibx-linux/. clean
+		${RM} ${NAME}
+		${RM} ./minilibx-linux/libmlx.a
 
 re:			fclean all
 

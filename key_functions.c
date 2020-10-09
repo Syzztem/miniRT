@@ -12,6 +12,13 @@
 
 #include "mini_rt.h"
 #ifdef LINUX
+# define EXIT 53
+# define NEXT 49
+# define SAVE 1
+# define BLWH 38
+# define SEPI 40
+# define INVT 37
+# define REST 4
 #else
 # define EXIT 53
 # define NEXT 49
@@ -73,6 +80,7 @@ int	k_hook(int keycode, void *param)
 		apply_filter(scene, filter_inv);
 	else if (keycode == REST)
 		apply_filter(scene, NULL);
+	printf("%d\n", keycode);
 	return (0);
 }
 
