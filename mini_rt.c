@@ -11,6 +11,11 @@
 /* ************************************************************************** */
 
 #include "mini_rt.h"
+#ifdef LINUX
+# define CROSS 33
+#else
+# define CROSS 17
+#endif
 
 void
 	finish_cam_list(t_cam *cam_list)
@@ -98,7 +103,7 @@ void
 		mlx_put_image_to_window(mlx_ptr, window,
 			scene.camera->render->img_ptr, 0, 0);
 		mlx_key_hook(window, k_hook, &scene);
-		mlx_hook(window, 17, 0, xyeet, &scene);
+		mlx_hook(window, CROSS, 0, xyeet, &scene);
 		scene.mlx_pointer = mlx_ptr;
 		scene.window_pointer = window;
 		mlx_loop(mlx_ptr);

@@ -6,19 +6,19 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 11:14:13 by lothieve          #+#    #+#             */
-/*   Updated: 2020/09/29 16:36:51 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:57:06 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 #ifdef LINUX
-# define EXIT 53
-# define NEXT 49
-# define SAVE 1
-# define BLWH 38
-# define SEPI 40
-# define INVT 37
-# define REST 4
+# define EXIT 65307
+# define NEXT 32
+# define SAVE 115
+# define BLWH 104
+# define SEPI 106
+# define INVT 107
+# define REST 108
 #else
 # define EXIT 53
 # define NEXT 49
@@ -54,7 +54,7 @@ void
 	if (!filtered)
 		filtered = generate_image(scene->resolution, scene->mlx_pointer);
 	ft_memcpy(filtered->img_data, image->img_data,
-		scene->resolution.x * scene->resolution.y * 4);
+		scene->resolution.x * scene->resolution.y * sizeof(int));
 	if (filter)
 		filter(filtered);
 	mlx_put_image_to_window(scene->mlx_pointer,
@@ -80,7 +80,6 @@ int	k_hook(int keycode, void *param)
 		apply_filter(scene, filter_inv);
 	else if (keycode == REST)
 		apply_filter(scene, NULL);
-	printf("%d\n", keycode);
 	return (0);
 }
 
