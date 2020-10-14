@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:20:28 by lothieve          #+#    #+#             */
-/*   Updated: 2020/09/27 18:32:23 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/10/14 12:23:22 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 # define DEG_TO_RAD 0.01745329251
 # define EPSILON 0.0001
 # include "get_next_line.h"
-# include "../minilibx-linux/mlx.h"
+# ifdef LINUX
+#  include "../minilibx-linux/mlx.h"
+# else
+#  include <mlx.h>
+# endif
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
