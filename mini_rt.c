@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:17:21 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/13 14:35:05 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/10/14 14:15:38 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void
 		mlx_loop(mlx_ptr);
 	}
 	create_bitmap(*scene.camera->render, filename);
-	yeet(scene, 0, NULL);
 }
 
 int
