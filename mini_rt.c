@@ -23,6 +23,8 @@ void
 	t_cam *start;
 	t_cam *end;
 
+	if (!cam_list)
+		yeet(NULL, 1, "Error\ninvalid file\n");
 	start = cam_list;
 	end = cam_list;
 	while (end->next)
@@ -59,9 +61,8 @@ t_scene
 }
 
 t_scene
-	get_scene_info(int fd)
+	get_scene_info(int fd, char *line)
 {
-	char	*line;
 	t_scene	scene;
 
 	scene.camera = NULL;
@@ -71,6 +72,7 @@ t_scene
 	scene.ambient_light.intensity = -1;
 	while (get_next_line(fd, &line))
 		scene = parse_line(line, scene);
+	scene = parse_line(line, scene);
 	finish_cam_list(scene.camera);
 	if (scene.resolution.x > MAX_RES_X)
 		scene.resolution = (t_vector2){
@@ -82,9 +84,8 @@ t_scene
 			.x = (float)scene.resolution.x * ((float)MAX_RES_Y /
 			(float)scene.resolution.y) - 0.5f, .y = MAX_RES_Y};
 	if (scene.ambient_light.intensity == -1 || scene.resolution.x == -1
-		|| !scene.camera || !scene.light_list || !scene.shape_list
-		|| g_error != 0)
-		yeet(scene, 1, "Error\ninvalid file\n");
+		|| !scene.light_list || !scene.shape_list || g_error != 0)
+		yeet(&scene, 1, "Error\ninvalid file\n");
 	return (scene);
 }
 
@@ -137,6 +138,6 @@ int
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (ft_puts("Error\nCouldn't open file.\n", -1));
-	test_scene = get_scene_info(fd);
+	test_scene = get_scene_info(fd, 0);
 	mini_rt(test_scene, savemode, filename);
 }

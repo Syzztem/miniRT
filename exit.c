@@ -76,10 +76,10 @@ int
 }
 
 void
-	yeet(t_scene scene, int ret, char *error_str)
+	yeet(t_scene *scene, int ret, char *error_str)
 {
-	if (ret == 0)
-		mlx_destroy_window(scene.mlx_pointer, scene.window_pointer);
+	if (!ret && scene)
+		mlx_destroy_window(scene->mlx_pointer, scene->window_pointer);
 	if (error_str)
 		ft_puts(error_str, 0);
 	exit(ret);

@@ -158,7 +158,7 @@ double			ft_fminpos(double a, double b);
 void			calculate_rotation_data(t_cam *cam);
 int				k_hook(int keycode, void *param);
 void			next_view(t_scene *scene);
-void			yeet(t_scene scene, int ret, char *errorstr);
+void			yeet(t_scene *scene, int ret, char *errorstr);
 int				xyeet(void *param);
 
 void			db_print_vector(t_v3double v);

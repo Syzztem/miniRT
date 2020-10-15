@@ -67,7 +67,7 @@ int	k_hook(int keycode, void *param)
 
 	scene = (t_scene*)param;
 	if (keycode == EXIT)
-		yeet(*scene, 0, NULL);
+		yeet(scene, 0, NULL);
 	else if (keycode == NEXT)
 		next_view(scene);
 	else if (keycode == SAVE)
