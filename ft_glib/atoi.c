@@ -6,7 +6,7 @@
 /*   By: lothieve <lothieve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:08:46 by lothieve          #+#    #+#             */
-/*   Updated: 2020/08/07 14:35:01 by lothieve         ###   ########.fr       */
+/*   Updated: 2020/10/21 11:14:03 by lothieve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,28 @@ int
 double
 	ft_atof(const char *str)
 {
-	int		integer_part;
-	int		decimal_part;
-	double	out;
+	int		i;
+	double	res;
+	char	sign;
+	double	pos;
 
-	integer_part = ft_atoi(str);
-	str += ft_strilen(str);
-	if (*str == '.')
+	pos = 0.1;
+	res = 0;
+	sign = 1;
+	i = -1;
+	while (ft_isspace(*str))
 		str++;
-	else
-		return (integer_part);
-	decimal_part = ft_atoi(str);
-	if (integer_part == 0 && decimal_part == 0)
-		return (0);
-	out = (double)integer_part + (double)decimal_part / (ft_strilen(str) * 10);
-	return (out);
+	while (str[++i] == '+' || str[i] == '-')
+		if (str[i] == '-')
+			sign = -sign;
+	i--;
+	while (str[++i] >= '0' && str[i] <= '9')
+		res = res * 10 + str[i] - 48;
+	if (str[i] == '.')
+		while (str[++i] >= '0' && str[i] <= '9')
+		{
+			res += pos * (str[i] - 48);
+			pos *= 0.1;
+		}
+	return (res * sign);
 }
